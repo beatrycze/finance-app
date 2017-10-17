@@ -1,0 +1,37 @@
+.app-logo {
+  height: 90px;
+}
+
+@media (min-width: 992px) {
+  .app-logo {
+    height: 90px;
+    animation: 4s ease-in 3s 2 alternate both Move;
+    position: relative;
+  }
+}
+
+@media (max-width: 992px) {
+  .app-header {
+    text-align: right;
+  }
+}
+
+.app-logo:hover {
+  transform: translateX(-200px) rotate(360deg);
+  transition: all 1.5s ease-in-out;
+}
+
+.app-header {
+  background-color: #15c4c9;
+  height: 100px;
+  padding-top: 5px;
+}
+
+@keyframes Move {
+  0% {
+    left: 90%;
+  }
+  100% {
+    left: 0%;
+  }
+}

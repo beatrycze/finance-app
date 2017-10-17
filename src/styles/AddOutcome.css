@@ -1,0 +1,27 @@
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 10px 0px 10px 0px;
+}
+
+.top-spacer {
+  margin-top: 20px;
+}
+
+.checkbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+@media (min-width: 992px) {
+  .right-spacer {
+    margin-right: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .right-spacer {
+    margin-right: 30px;
+  }
+}
+
