@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {usersModel} from '../models/users.model.js';
-import {outcomeCategoriesModel} from '../models/outcome-categories.model.js';
+import {usersModel} from '../models/Users.model.js';
+import {outcomeCategoriesModel} from '../models/OutcomeCategories.model.js';
 import Header from '../components/Header';
 import AddOutcome from '../components/AddOutcome';
 import Footer from '../components/Footer';
