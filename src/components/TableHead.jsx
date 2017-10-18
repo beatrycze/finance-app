@@ -1,10 +1,10 @@
 import React from 'react';
 
-const tableHead = () => {
+const TableHead = () => {
     return(
         <thead>
             <tr>
-                <th className="col-sm-1">#</th>
+                <th className="col-sm-1">Lp</th>
                 <th className="col-sm-2">Kategoria</th>
                 <th className="col-sm-2">Kwota</th>
                 <th className="col-sm-2">Utworzył(a)</th>
@@ -15,4 +15,4 @@ const tableHead = () => {
     );
 };
 
-export default tableHead;
+export default TableHead;

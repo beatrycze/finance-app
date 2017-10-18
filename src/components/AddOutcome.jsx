@@ -4,7 +4,7 @@ import '../styles/AddOutcome.css';
 
 const AddOutcome = (props) => {
     const outcomeCategoriesOptions = props.outcomeCategories;
-    const userNames = props.users;
+    const usersOptions = props.users;
 
     return(
         <div className="container-fluid page-intro">
@@ -39,7 +39,7 @@ const AddOutcome = (props) => {
                                 label={"createdBy"}
                                 name={"Utworzył(a)"}
                                 value={props.newOutcome.createdBy}
-                                options={userNames}
+                                options={usersOptions}
                             />
                         </div>
                         <div className="form-group row">

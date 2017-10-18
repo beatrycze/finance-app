@@ -1,7 +1,35 @@
 import React from 'react';
 import TableHead from './TableHead';
 
-const outcomes = () => {
+const Outcomes = (props) => {
+    const tableRows = props.outcomes.map((item, index) => {
+
+        const userName = props.users.map(user => {
+            if(item.createdBy === user.id) {
+                return `${user.firstName} ${user.lastName}`;
+            }
+            return null;
+        });
+
+        const categoryName = props.outcomeCategories.map(category => {
+            if(item.categoryId === category.id) {
+                return category.name;
+            }
+            return null;
+        });
+
+        return(
+            <tr key={item.id}>
+                <th scope="row">{index+1}</th>
+                <td>{categoryName}</td>
+                <td>{item.amount}</td>
+                <td>{userName}</td>
+                <td>{item.createdAt.slice(0,10)}</td>
+                <td><a href="#">Edytuj</a> | <a href="#">Skasuj</a></td>
+            </tr>
+        );
+    });
+
     return(
         <div className="container-fluid page-intro">
             <div className="top-spacer">
@@ -11,30 +39,7 @@ const outcomes = () => {
                     <table className="table table-striped table-condensed">
                         <TableHead />
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Jedzenie</td>
-                                <td>45.00</td>
-                                <td>John Lenon</td>
-                                <td>01-09-2017</td>
-                                <td><a href="#">Edytuj</a> | <a href="#">Skasuj</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Rachunki</td>
-                                <td>679.80</td>
-                                <td>Jack Nicholson</td>
-                                <td>02-09-2017</td>
-                                <td><a href="#">Edytuj</a> | <a href="#">Skasuj</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Podróże</td>
-                                <td>1200.00</td>
-                                <td>Janis Joplin</td>
-                                <td>03-09-2017</td>
-                                <td><a href="#">Edytuj</a> | <a href="#">Skasuj</a></td>
-                            </tr>
+                            {tableRows}
                         </tbody>
                     </table>
                 </div>
@@ -43,4 +48,4 @@ const outcomes = () => {
     );
 }
 
-export default outcomes;
+export default Outcomes;
