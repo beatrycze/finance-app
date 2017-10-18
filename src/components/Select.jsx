@@ -1,9 +1,14 @@
 import React from 'react';
 
 const Select = (props) => {
-    const options = props.options.map((option) =>
-        <option>{option}</option>
-    );
+    const options = props.options.map((option) => {
+        if(option.name) {
+            return <option key={option.id}>{option.name}</option>
+        } else if (option.firstName) {
+            return <option key={option.id}>{`${option.firstName} ${option.lastName}`}</option>
+        }
+        return null;
+    });    
 
     return (
         <div>

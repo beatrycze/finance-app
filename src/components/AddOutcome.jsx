@@ -3,8 +3,8 @@ import Select from './Select';
 import '../styles/AddOutcome.css';
 
 const AddOutcome = (props) => {
-    const outcomeCategoriesOptions = props.outcomeCategories.map(category => category.name);
-    const userNames = props.users.map(user => `${user.firstName} ${user.lastName}`);
+    const outcomeCategoriesOptions = props.outcomeCategories;
+    const userNames = props.users;
 
     return(
         <div className="container-fluid page-intro">
@@ -76,61 +76,6 @@ const AddOutcome = (props) => {
                 </div>
             </div>
         </div>
-
-
-        // <div className="page-intro grid">
-        //     <h1>Dodaj wydatek</h1>
-
-        //     <form>
-        //         <div className="row">
-        //             <label for="amount" className="col-2">Kwota</label>
-        //             <div className="col-10">
-        //             <input type="text" className="form-control" id="amount" placeholder="Kwota" />
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <label for="category" className="col-2">Kategoria</label>
-        //             <div className="col-10">
-        //             <select className="" id="category">
-        //             <option>Jakaś kategoria ...</option>
-        //             <option>Jakaś kategoria ...</option>
-        //             <option>Jakaś kategoria ...</option>
-        //             <option>Jakaś kategoria ...</option>
-        //             <option>Jakaś kategoria ...</option>
-        //             </select>
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <label for="createdBy" className="col-2">Utworzył(a)</label>
-        //             <div className="col-10">
-        //             <select className="" id="createdBy">
-        //             <option>Jakiś użytkownik ...</option>
-        //             <option>Jakiś użytkownik ...</option>
-        //             <option>Jakiś użytkownik ...</option>
-        //             </select>
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <label for="date" className="col-2">Utworzono</label>
-        //             <div className="col-10">
-        //             <input type="text" className="form-control" id="date" placeholder="Wybierz datę" />
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <label for="dateSave" className="col-2">Zapamiętaj datę</label>
-        //             <div className="col-10">
-        //             <input type="checkbox" className="form-control" id="dateSave" />
-        //             </div>
-        //         </div>
-        //         <div className="row">
-        //             <label for="description" className="col-2">Opis</label>
-        //             <div className="col-10">
-        //             <input type="text" className="form-control" id="description" placeholder="opis" />
-        //             </div>
-        //         </div>
-        //         <button type="submit" class="">Zapisz i dodaj</button>
-        //     </form>
-        // </div>
     );
 }
 

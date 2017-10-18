@@ -17,7 +17,7 @@
 }
 
 .app-logo:hover {
-  transform: translateX(-200px) rotate(360deg);
+  transform: rotate(360deg);
   transition: all 1.5s ease-in-out;
 }
 
