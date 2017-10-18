@@ -3,6 +3,7 @@ import {usersModel} from '../models/Users.model.js';
 import {outcomeCategoriesModel} from '../models/OutcomeCategories.model.js';
 import '../index.css';
 import Header from '../components/Header';
+import Outcomes from '../components/Outcomes';
 import AddOutcome from '../components/AddOutcome';
 import Footer from '../components/Footer';
 
@@ -45,6 +46,7 @@ class App extends Component {
     return (
       <div>
         <Header />
+        <Outcomes />
         <AddOutcome users={this.state.users} outcomeCategories={this.state.outcomeCategories} newOutcome={this.state.newOutcome} />
         {/*<div><pre>{JSON.stringify(this.state.users, null, 2) }</pre></div>*/}
         <Footer />
