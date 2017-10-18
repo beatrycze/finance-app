@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {usersModel} from '../models/Users.model.js';
 import {outcomesModel} from '../models/Outcomes.model.js';
+import {incomesModel} from '../models/Incomes.model.js';
 import {outcomeCategoriesModel} from '../models/OutcomeCategories.model.js';
+import {incomeCategoriesModel} from '../models/IncomeCategories.model.js';
 import '../index.css';
 import Header from '../components/Header';
 import Outcomes from '../components/Outcomes';
+import Incomes from '../components/Incomes';
 import AddOutcome from '../components/AddOutcome';
 import Footer from '../components/Footer';
 
@@ -46,7 +49,18 @@ class App extends Component {
     .then(outcomes => outcomes.slice(0,15))
     .then(outcomes => this.setState({
       outcomes
-    }))
+    }));
+
+    incomeCategoriesModel.get()
+    .then(incomeCategories => this.setState({
+      incomeCategories
+    }));
+
+    incomesModel.get()
+    .then(incomes => incomes.slice(0,15))
+    .then(incomes => this.setState({
+      incomes
+    }));
   }
 
   render() {
@@ -56,6 +70,11 @@ class App extends Component {
         <Outcomes 
           outcomes={this.state.outcomes}
           outcomeCategories={this.state.outcomeCategories}
+          users={this.state.users}
+        />
+        <Incomes 
+          incomes={this.state.incomes}
+          incomeCategories={this.state.incomeCategories}
           users={this.state.users}
         />
         {/*Temporary TODO*/}
