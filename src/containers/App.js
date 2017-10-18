@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import Outcomes from '../components/Outcomes';
 import Incomes from '../components/Incomes';
 import AddOutcome from '../components/AddOutcome';
+import AddIncome from '../components/AddIncome';
 import Footer from '../components/Footer';
 
 class App extends Component {
@@ -22,6 +23,14 @@ class App extends Component {
       incomeCategories: [],
       users: [],
       newOutcome: {
+        id: '',
+        categoryId: '',
+        amount: '',
+        description: '',
+        createdAt: '',
+        createdBy: ''
+      },
+      newIncome: {
         id: '',
         categoryId: '',
         amount: '',
@@ -83,7 +92,12 @@ class App extends Component {
           outcomeCategories={this.state.outcomeCategories}
           newOutcome={this.state.newOutcome}
         />
-        {/*<div><pre>{JSON.stringify(this.state.users, null, 2) }</pre></div>*/}
+        {/*Temporary TODO*/}
+        <AddIncome 
+          users={this.state.users}
+          incomeCategories={this.state.incomeCategories}
+          newIncome={this.state.newIncome}
+        />
         <Footer />
       </div>
     );

@@ -31,7 +31,7 @@ const Incomes = (props) => {
     });
 
     return(
-        <div className="container-fluid page-intro">
+        <div className="container-fluid">
             <div className="top-spacer">
                 <h1>Lista przychodów</h1>
                 <button type="button" className="btn btn-info">Dodaj nowy</button>
