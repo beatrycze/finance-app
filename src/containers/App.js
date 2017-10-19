@@ -6,8 +6,8 @@ import {outcomeCategoriesModel} from '../models/OutcomeCategories.model.js';
 import {incomeCategoriesModel} from '../models/IncomeCategories.model.js';
 import '../index.css';
 import Header from '../components/Header';
-import Outcomes from '../components/Outcomes';
-import Incomes from '../components/Incomes';
+import OutcomesList from '../components/OutcomesList';
+import IncomesList from '../components/IncomesList';
 import AddOutcome from '../components/AddOutcome';
 import AddIncome from '../components/AddIncome';
 import Footer from '../components/Footer';
@@ -76,14 +76,14 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <Outcomes 
-          outcomes={this.state.outcomes}
-          outcomeCategories={this.state.outcomeCategories}
+        <IncomesList 
+          dataTypes={this.state.incomes}
+          dataTypesCategories={this.state.incomeCategories}
           users={this.state.users}
         />
-        <Incomes 
-          incomes={this.state.incomes}
-          incomeCategories={this.state.incomeCategories}
+        <OutcomesList
+          dataTypes={this.state.outcomes}
+          dataTypesCategories={this.state.outcomeCategories}
           users={this.state.users}
         />
         {/*Temporary TODO*/}
