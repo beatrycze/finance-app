@@ -3,19 +3,11 @@ import React from 'react';
 const TableRows = (props) => {
     const tableRows = props.dataTypes.map((item, index) => {
 
-        const userName = props.users.map(user => {
-            if(item.createdBy === user.id) {
-                return `${user.firstName} ${user.lastName}`;
-            }
-            return null;
-        });
+        const user = props.users.find(user => item.createdBy === user.id);
+        const userName = `${user.firstName} ${user.lastName}`;
 
-        const categoryName = props.dataTypesCategories.map(category => {
-            if(item.categoryId === category.id) {
-                return category.name;
-            }
-            return null;
-        });
+        const category = props.dataTypesCategories.find(category => item.categoryId === category.id);
+        const categoryName = category.name;
 
         return(
             <tr key={item.id}>
