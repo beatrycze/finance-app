@@ -9,9 +9,9 @@ const IncomesList = (props) => {
                 <button type="button" className="btn btn-info">Dodaj nowy</button>
                 <div className="table-responsive top-spacer">
                     <Table
-                        dataTypes={props.dataTypes}
+                        items={props.items}
                         users={props.users}
-                        dataTypesCategories={props.dataTypesCategories}
+                        categories={props.categories}
                     />
                 </div>
             </div>

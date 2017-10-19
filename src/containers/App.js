@@ -77,13 +77,13 @@ class App extends Component {
       <div>
         <Header />
         <IncomesList 
-          dataTypes={this.state.incomes}
-          dataTypesCategories={this.state.incomeCategories}
+          items={this.state.incomes}
+          categories={this.state.incomeCategories}
           users={this.state.users}
         />
         <OutcomesList
-          dataTypes={this.state.outcomes}
-          dataTypesCategories={this.state.outcomeCategories}
+          items={this.state.outcomes}
+          categories={this.state.outcomeCategories}
           users={this.state.users}
         />
         {/*Temporary TODO*/}
