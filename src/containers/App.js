@@ -5,22 +5,22 @@ import {
   Switch
 } from 'react-router-dom';
 
-import {usersModel} from '../models/Users.model.js';
-import {outcomesModel} from '../models/Outcomes.model.js';
-import {incomesModel} from '../models/Incomes.model.js';
-import {outcomesCategoriesModel} from '../models/OutcomesCategories.model.js';
-import {incomesCategoriesModel} from '../models/IncomesCategories.model.js';
-import { wrap } from '../models/utils';
+import {usersApi} from '../api/usersApi';
+import {outcomesApi} from '../api/outcomesApi';
+import {incomesApi} from '../api/incomesApi';
+import {outcomesCategoriesApi} from '../api/outcomesCategoriesApi';
+import {incomesCategoriesApi} from '../api/incomesCategoriesApi';
+import { wrap } from '../utils/wrapper';
 
 import '../index.css';
 import Home from '../components/Home';
 import Header from '../components/Header';
-import OutcomesList from '../components/OutcomesList';
-import IncomesList from '../components/IncomesList';
-import AddOutcome from '../components/AddOutcome';
-import AddIncome from '../components/AddIncome';
 import Footer from '../components/Footer';
-import NotFound from '../components/not-found/NotFound';
+import NotFound from '../components/NotFound';
+import OutcomesList from './OutcomesList';
+import IncomesList from './IncomesList';
+import AddOutcome from './AddOutcome';
+import AddIncome from './AddIncome';
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    usersModel.get()
+    usersApi.get()
     /* TEMPORARY reducing collection size */
     .then(users => users.slice(0,25))
     .then(users => wrap(users))
@@ -43,24 +43,24 @@ class App extends Component {
       this.setState({users})
     });
 
-    outcomesCategoriesModel.get()
+    outcomesCategoriesApi.get()
     .then(outcomesCategories => wrap(outcomesCategories))
     .then(outcomesCategories => {
       this.setState({outcomesCategories})
     });
 
-    outcomesModel.get()
+    outcomesApi.get()
     /* TEMPORARY reducing collection size */
     .then(outcomes => outcomes.slice(0,25))
     .then( outcomes => this.setState({outcomes}) );
 
-    incomesCategoriesModel.get()
+    incomesCategoriesApi.get()
     .then(incomesCategories => wrap(incomesCategories))
     .then(incomesCategories => {
       this.setState({incomesCategories})
     });
 
-    incomesModel.get()
+    incomesApi.get()
     /* TEMPORARY reducing collection size */
     .then(incomes => incomes.slice(0,25))
     .then( incomes => this.setState({incomes}) );

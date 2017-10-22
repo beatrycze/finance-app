@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Table from './Table';
+import Table from '../components/Table';
 
 class IncomesList extends React.Component {
     constructor(props) {
