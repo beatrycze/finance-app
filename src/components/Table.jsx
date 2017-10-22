@@ -23,15 +23,17 @@ const Table = (props) => {
         <table className="table table-striped table-condensed">
             <TableHead />
             <tbody>
-                {props.items.map((item, index) => {
-                    return(
-                        <TableRow
-                            index={index}
-                            item={item}
-                            user={usersMap[item.createdBy]}
-                            category={categoriesMap[item.categoryId]}
-                        />
-                    )})
+                {props.items
+                    .map((item, index) => {
+                        let user = usersMap[item.createdBy];
+                        let itemData = Object.assign({}, item, {
+                            index: index + 1,
+                            // TODO: race condition
+                            user: user ? `${user.firstName} ${user.lastName}` : 'o.O',
+                            category: categoriesMap[item.categoryId].name
+                        });
+                        return <TableRow item={itemData} />
+                    })
                 }
             </tbody>
         </table>
