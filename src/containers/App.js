@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 
 import {usersModel} from '../models/Users.model.js';
@@ -19,6 +20,7 @@ import IncomesList from '../components/IncomesList';
 import AddOutcome from '../components/AddOutcome';
 import AddIncome from '../components/AddIncome';
 import Footer from '../components/Footer';
+import NotFound from '../components/not-found/NotFound';
 
 class App extends Component {
   constructor(props) {
@@ -70,11 +72,14 @@ class App extends Component {
         <Router>
           <div>
             <Header />
-            <Route exact path="/" component={Home} />
-            <Route path="/add-outcome" render={ (props) => (<AddOutcome users={this.state.users} outcomesCategories={this.state.outcomesCategories} {...props}/>) } />
-            <Route path="/add-income" render={ (props) => (<AddIncome users={this.state.users} incomesCategories={this.state.incomesCategories} {...props}/>) } />
-            <Route path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} outcomesCategories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
-            <Route path="/incomes" render={ (props) => (<IncomesList users={this.state.users} incomesCategories={this.state.incomesCategories} items={this.state.incomes} {...props}/>) } />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/add-outcome" render={ (props) => (<AddOutcome users={this.state.users} outcomesCategories={this.state.outcomesCategories} {...props}/>) } />
+              <Route path="/add-income" render={ (props) => (<AddIncome users={this.state.users} incomesCategories={this.state.incomesCategories} {...props}/>) } />
+              <Route exact path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} outcomesCategories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
+              <Route exact path="/incomes" render={ (props) => (<IncomesList users={this.state.users} incomesCategories={this.state.incomesCategories} items={this.state.incomes} {...props}/>) } />
+              <Route component={NotFound} />
+            </Switch>
             <Footer />
           </div>
         </Router>
