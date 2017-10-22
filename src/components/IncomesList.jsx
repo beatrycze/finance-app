@@ -1,22 +1,35 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Table from './Table';
 
-const IncomesList = (props) => {
-    return(
+class IncomesList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: props.items,
+            users: props.users.asMap(),
+            categories: props.incomesCategories.asMap()
+        };
+    }
+
+    render() {
+        return(
         <div className="container-fluid">
             <div className="top-spacer">
                 <h1>Lista przychodów</h1>
-                <button type="button" className="btn btn-info">Dodaj nowy</button>
+                <Link to={'/add-income'}><button type="button" className="btn btn-info">Dodaj nowy</button></Link>
                 <div className="table-responsive top-spacer">
                     <Table
-                        items={props.items}
-                        users={props.users}
-                        categories={props.categories}
+                        items={this.state.items}
+                        users={this.state.users}
+                        categories={this.state.categories}
                     />
                 </div>
             </div>
         </div>
-    );
-};
+        );
+    };
+}
 
 export default IncomesList;
