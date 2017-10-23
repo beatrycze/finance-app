@@ -10,7 +10,8 @@ const Table = (props) => {
                 {props.items
                     .map((item, index) => {
                         let user = props.users[item.createdBy];
-                        let itemData = Object.assign({}, item, {
+                        let itemData = Object.assign({}, item, props.itemType, {
+                            type: props.itemType,
                             index: index + 1,
                             user: user ? `${user.firstName} ${user.lastName}` : 'o.O',
                             category: props.categories ? props.categories[item.categoryId].name : 'o.O'

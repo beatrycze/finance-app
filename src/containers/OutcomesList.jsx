@@ -9,7 +9,7 @@ class OutcomesList extends React.Component {
         this.state = {
             items: props.items,
             users: props.users.asMap(),
-            categories: props.outcomesCategories.asMap()
+            categories: props.categories.asMap()
         };
     }
 
@@ -21,6 +21,7 @@ class OutcomesList extends React.Component {
                 <Link to={'/add-outcome'}><button type="button" className="btn btn-info">Dodaj nowy</button></Link>
                 <div className="table-responsive top-spacer">
                     <Table
+                        itemType={this.props.itemType}
                         items={this.state.items}
                         users={this.state.users}
                         categories={this.state.categories}

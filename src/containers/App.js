@@ -21,11 +21,17 @@ import OutcomesList from './OutcomesList';
 import IncomesList from './IncomesList';
 import AddOutcome from './AddOutcome';
 import AddIncome from './AddIncome';
+import EditOutcome from './EditOutcome';
+import EditIncome from './EditIncome';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      itemTypes: {
+        outcome: 'outcome',
+        income: 'income'
+      },
       outcomes: [],
       incomes: [],
       outcomesCategories: wrap([]),
@@ -74,10 +80,12 @@ class App extends Component {
             <Header />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/add-outcome" render={ (props) => (<AddOutcome users={this.state.users} outcomesCategories={this.state.outcomesCategories} {...props}/>) } />
-              <Route path="/add-income" render={ (props) => (<AddIncome users={this.state.users} incomesCategories={this.state.incomesCategories} {...props}/>) } />
-              <Route exact path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} outcomesCategories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
-              <Route exact path="/incomes" render={ (props) => (<IncomesList users={this.state.users} incomesCategories={this.state.incomesCategories} items={this.state.incomes} {...props}/>) } />
+              <Route path="/add-outcome" render={ (props) => (<AddOutcome users={this.state.users} categories={this.state.outcomesCategories} {...props}/>) } />
+              <Route path="/add-income" render={ (props) => (<AddIncome users={this.state.users} categories={this.state.incomesCategories} {...props}/>) } />
+              <Route exact path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} categories={this.state.outcomesCategories} items={this.state.outcomes} itemType={this.state.itemTypes.outcome} {...props}/>) } />
+              <Route exact path="/incomes" render={ (props) => (<IncomesList users={this.state.users} categories={this.state.incomesCategories} items={this.state.incomes} itemType={this.state.itemTypes.income} {...props}/>) } />
+              <Route path="/edit-outcome/:itemId" render={ (props) => (<EditOutcome users={this.state.users} categories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
+              <Route path="/edit-income/:itemId" render={ (props) => (<EditIncome users={this.state.users} categories={this.state.incomesCategories} items={this.state.incomes} {...props}/>) } />
               <Route component={NotFound} />
             </Switch>
             <Footer />

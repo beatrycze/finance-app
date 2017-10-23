@@ -7,7 +7,7 @@ class AddOutcome extends React.Component {
         super(props);
         this.state = {
             users: props.users.asList(),
-            categories: props.outcomesCategories.asList(),
+            categories: props.categories.asList(),
             newOutcome: {
                 id: '',
                 categoryId: '',

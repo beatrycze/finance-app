@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TableRow = ({item}) => {
     return(
@@ -8,7 +9,7 @@ const TableRow = ({item}) => {
             <td>{item.amount}</td>
             <td>{item.user}</td>
             <td>{item.createdAt.slice(0,10)}</td>
-            <td><a href="">Edytuj</a> | <a href="">Skasuj</a></td>
+            <td><Link to={item.type === 'income' ? '/edit-income/' + item.id : '/edit-outcome/' + item.id}>Edytuj</Link> | <a href="">Skasuj</a></td>
         </tr>
     );
 }
