@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Select from '../components/Select';
 import '../styles/Forms.css';
 
@@ -83,7 +84,7 @@ class AddIncome extends React.Component {
                                     <button type="button" className="btn btn-info">Zapisz zmiany</button>
                                 </div>
                                 <div className="col-sm-1 col-sm-offset-1 col-md-offset-0 col-lg-offset-0 top-spacer">
-                                    <button type="button" className="btn btn-default">Wróć do listy przychodów</button>
+                                    <Link to={'/incomes'}><button type="button" className="btn btn-default">Wróć do listy przychodów</button></Link>
                                 </div>
                             </div>
                         </form>
