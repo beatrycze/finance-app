@@ -44,7 +44,7 @@ class IncomesList extends React.Component {
                 <div className="table-responsive top-spacer">
                     <Table
                         onDeleteItem={this.deleteIncome.bind(this)}
-                        itemType={this.props.itemType}
+                        itemType="income"
                         items={this.state.items}
                         users={this.state.users}
                         categories={this.state.categories}

@@ -43,17 +43,17 @@ class AddIncome extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <Select 
-                                    label={"category"}
-                                    name={"Kategoria"}
-                                    value={this.state.newIncome.categoryId}
+                                    label="category"
+                                    name="Kategoria"
+                                    placeholder="Wybierz"
                                     options={this.state.categories}
                                 />
                             </div>
                             <div className="form-group row">
                                 <Select 
-                                    label={"createdBy"}
-                                    name={"Utworzył(a)"}
-                                    value={this.state.newIncome.createdBy}
+                                    label="createdBy"
+                                    name="Utworzył(a)"
+                                    placeholder="Wybierz"
                                     options={this.state.users}
                                 />
                             </div>
