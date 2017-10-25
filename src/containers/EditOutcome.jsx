@@ -29,7 +29,7 @@ class EditOutcome extends React.Component {
         const item = this.state.items.find(item => item.id === parseInt(id, 10));
         const itemCategoryId = this.state.categoriesMap[item.categoryId].name;
         const user = this.state.usersMap[item.createdBy];
-        const itemCreatedBy = `${user.firstName} ${user.lastName}`;
+        const itemCreatedBy = user.name;
 
         this.setState({
             item: {

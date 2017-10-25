@@ -44,6 +44,10 @@ class App extends Component {
         usersApi.get()
         /* TEMPORARY reducing collection size */
         .then(users => users.slice(0,25))
+        .then(users => {
+            users.forEach(user => user.name = `${user.firstName} ${user.lastName}`);
+            return users;
+        })
         .then(users => wrap(users))
         .then(users => {
             this.setState({users})

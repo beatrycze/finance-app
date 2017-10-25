@@ -13,7 +13,7 @@ const Table = (props) => {
                         let itemData = Object.assign({}, item, {
                             type: props.itemType,
                             index: index + 1,
-                            user: user ? `${user.firstName} ${user.lastName}` : 'o.O',
+                            user: user ? user.name : 'o.O',
                             category: props.categories ? props.categories[item.categoryId].name : 'o.O'
                         });
                         return <TableRow key={item.id} item={itemData} onDeleteItem={props.onDeleteItem}/>
