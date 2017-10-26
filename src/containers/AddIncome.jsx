@@ -13,11 +13,9 @@ class AddIncome extends React.Component {
             categories: props.categories.asList(),
             newItemId: '',
             newItemCategoryId: '',
-            newItemCategoryName: '',
             newItemAmount: '',
             newItemCreatedDate: '',
             newItemUserId: '',
-            newItemUserName: '',
             newItemDescription: ''
         };
     }

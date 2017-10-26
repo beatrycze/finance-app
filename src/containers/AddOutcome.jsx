@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Select from '../components/Select';
 import '../styles/Forms.css';
 
-import {incomesApi} from '../api/incomesApi';
+import {outcomesApi} from '../api/outcomesApi';
 
 class AddOutcome extends React.Component {
     constructor(props) {
@@ -13,11 +13,9 @@ class AddOutcome extends React.Component {
             categories: props.categories.asList(),
             newItemId: '',
             newItemCategoryId: '',
-            newItemCategoryName: '',
             newItemAmount: '',
             newItemCreatedDate: '',
             newItemUserId: '',
-            newItemUserName: '',
             newItemDescription: ''
         };
     }
@@ -31,7 +29,7 @@ class AddOutcome extends React.Component {
     }
 
     componentDidMount() {
-        incomesApi.getCollection()
+        outcomesApi.getCollection()
         .then(items => {
             let lastItemId = items[items.length-1].id;
             return lastItemId;

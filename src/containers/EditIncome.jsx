@@ -15,11 +15,9 @@ class EditIncome extends React.Component {
             categoriesMap: props.categories.asMap(),
             itemId: parseInt(props.match.params.itemId, 10),
             categoryId: '',
-            categoryName: '',
             amount: '',
             createdDate: '',
             userId: '',
-            userName: '',
             description: ''
         };
     }
@@ -38,24 +36,20 @@ class EditIncome extends React.Component {
 
         incomesApi.getItem(id)
         .then(item => {
-            item.categoryName = this.state.categoriesMap[item.categoryId].name;
-            item.userName = this.state.usersMap[item.createdBy].name;
             item.createdDate = item.createdAt.slice(0,10);
             return item;
         })
         .then( item => this.setState({
             categoryId: item.categoryId,
-            categoryName: item.categoryName,
             amount: item.amount,
             createdDate: item.createdDate,
             userId: item.createdBy,
-            userName: item.userName,
             description: item.description
         }));
     }
 
     render() {
-        if (!this.state.categoryName) {
+        if (!this.state.createdDate) {
             return(
                 <div className="container-fluid">
                     <div>
