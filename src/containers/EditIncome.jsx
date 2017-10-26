@@ -27,7 +27,8 @@ class EditIncome extends React.Component {
     handleFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
-            [field]: value,
+            [field]: value
+            // TODO validation
             // [field + 'Valid']: value.length > 0
         });
     }
@@ -58,7 +59,7 @@ class EditIncome extends React.Component {
             return(
                 <div className="container-fluid">
                     <div>
-                        <h2>Loading...</h2>  
+                        <h2>Loading...</h2>
                     </div>
                 </div>
             );

@@ -55,7 +55,7 @@ class App extends Component {
             this.setState({outcomesCategories})
         });
 
-        outcomesApi.get()
+        outcomesApi.getCollection()
         /* TEMPORARY reducing collection size */
         .then(outcomes => outcomes.slice(0,25))
         .then( outcomes => this.setState({outcomes}) );

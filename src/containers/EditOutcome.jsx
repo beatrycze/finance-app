@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Select from '../components/Select';
 import '../styles/Forms.css';
 
+import {outcomesApi} from '../api/outcomesApi';
+
 class EditOutcome extends React.Component {
     constructor(props) {
         super(props);
@@ -11,39 +13,56 @@ class EditOutcome extends React.Component {
             usersMap: props.users.asMap(),
             categoriesList: props.categories.asList(),
             categoriesMap: props.categories.asMap(),
-            items: props.items,
-            item: {
-                id: '',
-                categoryId: '',
-                amount: '',
-                createdAt: '',
-                createdBy: '',
-                description: ''
-            },
+            itemId: parseInt(props.match.params.itemId, 10),
+            categoryId: '',
+            categoryName: '',
+            amount: '',
+            createdDate: '',
+            userId: '',
+            userName: '',
+            description: ''
         };
     }
 
-    componentDidMount() {
-        const id = this.props.match.params.itemId;
-
-        const item = this.state.items.find(item => item.id === parseInt(id, 10));
-        const itemCategoryId = this.state.categoriesMap[item.categoryId].name;
-        const user = this.state.usersMap[item.createdBy];
-        const itemCreatedBy = user.name;
-
+    handleFieldChange(field, event) {
+        const value = event.currentTarget.value;
         this.setState({
-            item: {
-                id: item.id,
-                categoryId: itemCategoryId,
-                amount: item.amount,
-                createdAt: item.createdAt.slice(0,10),
-                createdBy: itemCreatedBy,
-                description: item.description
-            },
+            [field]: value
+            // TODO validation
         });
     }
 
+    componentDidMount() {
+        const id = this.state.itemId;
+
+        outcomesApi.getItem(id)
+        .then(item => {
+            item.categoryName = this.state.categoriesMap[item.categoryId].name;
+            item.userName = this.state.usersMap[item.createdBy].name;
+            item.createdDate = item.createdAt.slice(0,10);
+            return item;
+        })
+        .then( item => this.setState({
+            categoryId: item.categoryId,
+            categoryName: item.categoryName,
+            amount: item.amount,
+            createdDate: item.createdDate,
+            userId: item.createdBy,
+            userName: item.userName,
+            description: item.description
+        }));
+    }
+
     render() {
+        if (!this.state.categoryName) {
+            return(
+                <div className="container-fluid">
+                    <div>
+                        <h2>Loading...</h2>
+                    </div>
+                </div>
+            );
+        }
         return(
             <div className="container-fluid">
                 <div className="panel panel-default top-spacer">
@@ -55,20 +74,20 @@ class EditOutcome extends React.Component {
                             <div className="form-group row hidden">
                                 <label htmlFor="outcomeId" className="col-sm-2 col-lg-1 col-form-label">Id</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="outcomeId" placeholder="" value={this.state.item.id} />
+                                    <input type="text" className="form-control" id="outcomeId" placeholder="" defaultValue={this.state.itemId} />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.item.amount} />
+                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.amount} onChange={this.handleFieldChange.bind(this, 'amount')} />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <Select 
                                     label={"category"}
                                     name={"Kategoria"}
-                                    selectValue={this.state.item.categoryId}
+                                    selectedValue={this.state.categoryId}
                                     options={this.state.categoriesList}
                                 />
                             </div>
@@ -76,20 +95,20 @@ class EditOutcome extends React.Component {
                                 <Select 
                                     label={"createdBy"}
                                     name={"Utworzył(a)"}
-                                    selectValue={this.state.item.createdBy}
+                                    selectedValue={this.state.userId}
                                     options={this.state.usersList}
                                 />
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.item.createdAt}/>
+                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.createdDate} onChange={this.handleFieldChange.bind(this, 'createdDate')} />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
-                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.item.description}/>
+                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.description} onChange={this.handleFieldChange.bind(this, 'description')} />
                                 </div>
                             </div>
                             <div className="form-group row">

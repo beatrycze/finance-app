@@ -25,8 +25,8 @@ class AddIncome extends React.Component {
     handleFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
-            [field]: value,
-            // [field + 'Valid']: value.length > 0
+            [field]: value
+            // TODO validation
         });
     }
 
