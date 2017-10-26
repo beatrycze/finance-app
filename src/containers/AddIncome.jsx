@@ -3,21 +3,42 @@ import { Link } from 'react-router-dom';
 import Select from '../components/Select';
 import '../styles/Forms.css';
 
+import {incomesApi} from '../api/incomesApi';
+
 class AddIncome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             users: props.users.asList(),
             categories: props.categories.asList(),
-            newIncome: {
-                id: '',
-                categoryId: '',
-                amount: '',
-                createdAt: '',
-                createdBy: '',
-                description: ''
-            },
+            newItemId: '',
+            newItemCategoryId: '',
+            newItemCategoryName: '',
+            newItemAmount: '',
+            newItemCreatedDate: '',
+            newItemUserId: '',
+            newItemUserName: '',
+            newItemDescription: ''
         };
+    }
+
+    handleFieldChange(field, event) {
+        const value = event.currentTarget.value;
+        this.setState({
+            [field]: value,
+            // [field + 'Valid']: value.length > 0
+        });
+    }
+
+    componentDidMount() {
+        incomesApi.getCollection()
+        .then(items => {
+            let lastItemId = items[items.length-1].id;
+            return lastItemId;
+        })
+        .then(lastItemId => this.setState({
+            newItemId: ++lastItemId
+        }))
     }
 
     render() {
@@ -32,13 +53,13 @@ class AddIncome extends React.Component {
                             <div className="form-group row hidden">
                                 <label htmlFor="incomeId" className="col-sm-2 col-lg-1 col-form-label">Id</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="incomeId" placeholder="" value={this.state.newIncome.id} />
+                                    <input type="text" className="form-control" id="incomeId" placeholder="" value={this.state.newItemId} />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.newIncome.amount} />
+                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.newItemAmount} onChange={this.handleFieldChange.bind(this, 'newItemAmount')} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -60,7 +81,7 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.newIncome.createdAt}/>
+                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.newItemCreatedDate} onChange={this.handleFieldChange.bind(this, 'newItemCreatedDate')} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -73,7 +94,7 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
-                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.newIncome.description}/>
+                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.newItemDescription} onChange={this.handleFieldChange.bind(this, 'newItemDescription')} />
                                 </div>
                             </div>
                             <div className="form-group row">

@@ -24,6 +24,14 @@ class EditIncome extends React.Component {
         };
     }
 
+    handleFieldChange(field, event) {
+        const value = event.currentTarget.value;
+        this.setState({
+            [field]: value,
+            // [field + 'Valid']: value.length > 0
+        });
+    }
+
     componentDidMount() {
         const id = this.state.itemId;
 
@@ -43,14 +51,6 @@ class EditIncome extends React.Component {
             userName: item.userName,
             description: item.description
         }));
-    }
-
-    handleFieldChange(field, event) {
-        const value = event.currentTarget.value;
-        this.setState({
-            [field]: value,
-            // [field + 'Valid']: value.length > 0
-        });
     }
 
     render() {
