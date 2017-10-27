@@ -68,7 +68,7 @@ class EditOutcome extends React.Component {
     }
 
     render() {
-        if (!this.state.createdDate) {
+        if (!this.state.amount) {
             return(
                 <div className="container-fluid">
                     <div>
