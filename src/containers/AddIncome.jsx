@@ -22,7 +22,7 @@ class AddIncome extends React.Component {
         };
     }
 
-    handleFieldChange(field, event) {
+    handleTextualFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
             [field]: value
@@ -30,11 +30,25 @@ class AddIncome extends React.Component {
         });
     }
 
-    handleSelectChange(field, event) {
-        const value = event.currentTarget.value;
+    handleNumericFieldChange(field, event) {
+        const value = parseInt(event.currentTarget.value, 10);
         this.setState({
             [field]: value
         });
+    }
+
+    handleCurrencyFieldChange(field, event) {
+        const value = parseFloat(event.currentTarget.value);
+        if(value === NaN) {
+            this.setState({
+                // TEMPORARY To prevent receiving NaN for numeric attribute `value`
+                [field]: ''
+            });
+        } else {
+            this.setState({
+                [field]: value
+            });
+        }
     }
 
     componentDidMount() {
@@ -66,7 +80,7 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.newItemAmount} onChange={this.handleFieldChange.bind(this, 'newItemAmount')} />
+                                    <input type="number" step="0.01" min="0" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.newItemAmount} onChange={this.handleCurrencyFieldChange.bind(this, 'newItemAmount')} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -74,9 +88,9 @@ class AddIncome extends React.Component {
                                     label="category"
                                     name="Kategoria"
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.categoryValue}
+                                    selectedValue={this.state.newItemCategoryValue}
                                     options={this.state.categories}
-                                    handleChange={this.handleSelectChange.bind(this, "newItemCategoryValue")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemCategoryValue")}
                                 />
                             </div>
                             <div className="form-group row">
@@ -84,15 +98,15 @@ class AddIncome extends React.Component {
                                     label="createdBy"
                                     name="Utworzył(a)"
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.userValue}
+                                    selectedValue={this.state.newItemUserValue}
                                     options={this.state.users}
-                                    handleChange={this.handleSelectChange.bind(this, "newItemUserValue")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemUserValue")}
                                 />
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.newItemCreatedDate} onChange={this.handleFieldChange.bind(this, 'newItemCreatedDate')} />
+                                    <input type="date" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.newItemCreatedDate} onChange={this.handleTextualFieldChange.bind(this, 'newItemCreatedDate')} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -105,7 +119,7 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
-                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.newItemDescription} onChange={this.handleFieldChange.bind(this, 'newItemDescription')} />
+                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.newItemDescription} onChange={this.handleTextualFieldChange.bind(this, 'newItemDescription')} />
                                 </div>
                             </div>
                             <div className="form-group row">

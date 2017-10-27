@@ -22,20 +22,33 @@ class EditIncome extends React.Component {
         };
     }
 
-    handleFieldChange(field, event) {
+    handleTextualFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
             [field]: value
             // TODO validation
-            // [field + 'Valid']: value.length > 0
         });
     }
 
-    handleSelectChange(field, event) {
-        const value = event.currentTarget.value;
+    handleNumericFieldChange(field, event) {
+        const value = parseInt(event.currentTarget.value, 10);
         this.setState({
             [field]: value
         });
+    }
+
+    handleCurrencyFieldChange(field, event) {
+        const value = parseFloat(event.currentTarget.value);
+        if(value === NaN) {
+            this.setState({
+                // TEMPORARY To prevent receiving NaN for numeric attribute `value`
+                [field]: ''
+            });
+        } else {
+            this.setState({
+                [field]: value
+            });
+        }
     }
 
     componentDidMount() {
@@ -82,7 +95,7 @@ class EditIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.amount} onChange={this.handleFieldChange.bind(this, 'amount')} />
+                                    <input type="number" step="0.01" min="0" className="form-control" id="amount" placeholder="Wpisz kwotę" value={this.state.amount} onChange={this.handleCurrencyFieldChange.bind(this, 'amount')} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -91,7 +104,7 @@ class EditIncome extends React.Component {
                                     name="Kategoria"
                                     selectedValue={this.state.categoryId}
                                     options={this.state.categoriesList}
-                                    handleChange={this.handleSelectChange.bind(this, "categoryId")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
                                 />
                             </div>
                             <div className="form-group row">
@@ -100,19 +113,19 @@ class EditIncome extends React.Component {
                                     name="Utworzył(a)"
                                     selectedValue={this.state.userId}
                                     options={this.state.usersList}
-                                    handleChange={this.handleSelectChange.bind(this, "userId")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "userId")}
                                 />
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.createdDate} onChange={this.handleFieldChange.bind(this, 'createdDate')} />
+                                    <input type="date" className="form-control" id="date" placeholder="Wpisz datę" value={this.state.createdDate} onChange={this.handleTextualFieldChange.bind(this, 'createdDate')} />
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
-                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.description} onChange={this.handleFieldChange.bind(this, 'description')} />
+                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis" value={this.state.description} onChange={this.handleTextualFieldChange.bind(this, 'description')} />
                                 </div>
                             </div>
                             <div className="form-group row">
