@@ -31,6 +31,13 @@ class EditIncome extends React.Component {
         });
     }
 
+    handleSelectChange(field, event) {
+        const value = event.currentTarget.value;
+        this.setState({
+            [field]: value
+        });
+    }
+
     componentDidMount() {
         const id = this.state.itemId;
 
@@ -84,6 +91,7 @@ class EditIncome extends React.Component {
                                     name="Kategoria"
                                     selectedValue={this.state.categoryId}
                                     options={this.state.categoriesList}
+                                    handleChange={this.handleSelectChange.bind(this, "categoryId")}
                                 />
                             </div>
                             <div className="form-group row">
@@ -92,6 +100,7 @@ class EditIncome extends React.Component {
                                     name="Utworzył(a)"
                                     selectedValue={this.state.userId}
                                     options={this.state.usersList}
+                                    handleChange={this.handleSelectChange.bind(this, "userId")}
                                 />
                             </div>
                             <div className="form-group row">

@@ -3,11 +3,22 @@ import React from 'react';
 class Select extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: props.selectedValue}
+        this.state = {
+            value: props.selectedValue,
+            handleChange: props.handleChange
+        }
     }
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
+    // handleChange(event) {
+    //     this.setState({value: event.target.value});
+    // }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.state.value !== nextProps.selectedValue) {
+            this.setState({
+                value: nextProps.selectedValue
+            })
+        }
     }
 
     render() {
@@ -23,7 +34,7 @@ class Select extends React.Component {
             <div>
                 <label htmlFor={this.props.label} className="col-sm-2 col-lg-1 col-form-label">{this.props.name}</label>
                 <div className="col-sm-6 col-md-4">
-                    <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.handleChange.bind(this)}>
+                    <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.state.handleChange}>
                         {options}
                     </select>
                 </div>

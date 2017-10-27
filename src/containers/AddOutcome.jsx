@@ -16,7 +16,9 @@ class AddOutcome extends React.Component {
             newItemAmount: '',
             newItemCreatedDate: '',
             newItemUserId: '',
-            newItemDescription: ''
+            newItemDescription: '',
+            newItemCategoryValue: '',
+            newItemUserValue: ''
         };
     }
 
@@ -25,6 +27,13 @@ class AddOutcome extends React.Component {
         this.setState({
             [field]: value
             // TODO validation
+        });
+    }
+
+    handleSelectChange(field, event) {
+        const value = event.currentTarget.value;
+        this.setState({
+            [field]: value
         });
     }
 
@@ -65,7 +74,9 @@ class AddOutcome extends React.Component {
                                     label={"category"}
                                     name={"Kategoria"}
                                     placeholder="Wybierz"
+                                    selectedValue={this.state.newItemCategoryValue}
                                     options={this.state.categories}
+                                    handleChange={this.handleSelectChange.bind(this, "newItemCategoryValue")}
                                 />
                             </div>
                             <div className="form-group row">
@@ -73,7 +84,9 @@ class AddOutcome extends React.Component {
                                     label={"createdBy"}
                                     name={"Utworzył(a)"}
                                     placeholder="Wybierz"
+                                    selectedValue={this.state.newItemUserValue}
                                     options={this.state.users}
+                                    handleChange={this.handleSelectChange.bind(this, "newItemUserValue")}
                                 />
                             </div>
                             <div className="form-group row">
