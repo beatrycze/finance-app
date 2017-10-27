@@ -39,9 +39,8 @@ class AddIncome extends React.Component {
 
     handleCurrencyFieldChange(field, event) {
         const value = parseFloat(event.currentTarget.value);
-        if(value === NaN) {
+        if (isNaN(value)) {
             this.setState({
-                // TEMPORARY To prevent receiving NaN for numeric attribute `value`
                 [field]: ''
             });
         } else {
