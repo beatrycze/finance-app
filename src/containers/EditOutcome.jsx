@@ -85,12 +85,6 @@ class EditOutcome extends React.Component {
                     </div>
                     <div className="panel-body">
                         <form className="top-spacer">
-                            <div className="form-group row hidden">
-                                <label htmlFor="outcomeId" className="col-sm-2 col-lg-1 col-form-label">Id</label>
-                                <div className="col-sm-3 col-md-2">
-                                    <input type="number" className="form-control" id="outcomeId" placeholder="" defaultValue={this.state.itemId} />
-                                </div>
-                            </div>
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">

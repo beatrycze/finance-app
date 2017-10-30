@@ -9,10 +9,6 @@ class Select extends React.Component {
         }
     }
 
-    // handleChange(event) {
-    //     this.setState({value: event.target.value});
-    // }
-
     componentWillReceiveProps(nextProps) {
         if(this.state.value !== nextProps.selectedValue) {
             this.setState({

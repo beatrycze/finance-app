@@ -11,7 +11,6 @@ class AddIncome extends React.Component {
         this.state = {
             users: props.users.asList(),
             categories: props.categories.asList(),
-            newItemId: '',
             newItemCategoryId: '',
             newItemAmount: '',
             newItemCreatedDate: '',
@@ -50,17 +49,6 @@ class AddIncome extends React.Component {
         }
     }
 
-    componentDidMount() {
-        incomesApi.getCollection()
-        .then(items => {
-            let lastItemId = items[items.length-1].id;
-            return lastItemId;
-        })
-        .then(lastItemId => this.setState({
-            newItemId: ++lastItemId
-        }))
-    }
-
     render() {
         return(
             <div className="container-fluid">
@@ -70,12 +58,6 @@ class AddIncome extends React.Component {
                     </div>
                     <div className="panel-body">
                         <form className="top-spacer">
-                            <div className="form-group row hidden">
-                                <label htmlFor="incomeId" className="col-sm-2 col-lg-1 col-form-label">Id</label>
-                                <div className="col-sm-3 col-md-2">
-                                    <input type="text" className="form-control" id="incomeId" placeholder="" value={this.state.newItemId} />
-                                </div>
-                            </div>
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
