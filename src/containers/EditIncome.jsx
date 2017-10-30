@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Select from '../components/Select';
+import { incomesApi } from '../api/incomesApi';
+
 import '../styles/Forms.css';
 
-import {incomesApi} from '../api/incomesApi';
+import Select from '../components/Select';
 
 class EditIncome extends React.Component {
     constructor(props) {
@@ -135,6 +137,11 @@ class EditIncome extends React.Component {
             </div>
         );
     }
+};
+
+EditIncome.propTypes = {
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
 };
 
 export default EditIncome;

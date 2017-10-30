@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const TableRow = ({item, itemType, onDeleteItem}) => {
+const TableRow = ({item, onDeleteItem}) => {
     return(
         <tr>
             <th scope="row">{item.index}</th>
@@ -16,5 +17,10 @@ const TableRow = ({item, itemType, onDeleteItem}) => {
         </tr>
     );
 }
+
+TableRow.propTypes = {
+    item: PropTypes.object.isRequired,
+    onDeleteItem: PropTypes.func
+};
 
 export default TableRow;

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import TableHead from './TableHead';
 import TableRow from './TableRow';
 
@@ -22,6 +24,14 @@ const Table = (props) => {
             </tbody>
         </table>
     );
+};
+
+Table.propTypes = {
+    itemType: PropTypes.string.isRequired,
+    items: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired,
+    onDeleteItem: PropTypes.func
 };
 
 export default Table;

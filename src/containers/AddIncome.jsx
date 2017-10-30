@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Select from '../components/Select';
+import { incomesApi } from '../api/incomesApi';
+
 import '../styles/Forms.css';
 
-import {incomesApi} from '../api/incomesApi';
+import Select from '../components/Select';
 
 class AddIncome extends React.Component {
     constructor(props) {
@@ -12,8 +14,8 @@ class AddIncome extends React.Component {
             users: props.users.asList(),
             categories: props.categories.asList(),
             newItemAmount: '',
-            newItemCategoryId: '',
-            newItemUserId: '',
+            newItemCategoryId: 0,
+            newItemUserId: 0,
             newItemCreatedDate: '',
             newItemDescription: '',
             touched: {
@@ -224,5 +226,10 @@ class AddIncome extends React.Component {
         );
     }
 }
+
+AddIncome.propTypes = {
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
+};
 
 export default AddIncome;

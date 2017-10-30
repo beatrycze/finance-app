@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Select from '../components/Select';
+import { outcomesApi } from '../api/outcomesApi';
+
 import '../styles/Forms.css';
 
-import {outcomesApi} from '../api/outcomesApi';
+import Select from '../components/Select';
 
 class EditOutcome extends React.Component {
     constructor(props) {
@@ -135,6 +137,11 @@ class EditOutcome extends React.Component {
             </div>
         );
     }
+};
+
+EditOutcome.propTypes = {
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
 };
 
 export default EditOutcome;

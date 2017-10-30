@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { incomesApi } from '../api/incomesApi';
@@ -16,19 +17,28 @@ class IncomesList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: props.items,
+            items: [],
             users: props.users.asMap(),
             categories: props.categories.asMap()
         };
     }
 
+    componentDidMount() {
+        incomesApi.getCollection()
+        /* TEMPORARY reducing collection size */
+        .then(items => items.slice(0,25))
+        .then( items => this.setState({items}) );
+    }
+
 /*eslint-disable*/
     deleteIncome(id) {
-        confirmPromise(`Czy na pewno chcesz wywalić inkom ${id}?`)
+        confirmPromise(`Czy na pewno chcesz usunąć przychód o id ${id}?`)
 //        .catch(() => {}) // TODO o.O
         .then(() => incomesApi.delete(id))
         .then(() => alert('Usunięto'))
-        .then(() => incomesApi.get())
+        .then(() => incomesApi.getCollection())
+        /* TEMPORARY reducing collection size */
+        .then(items => items.slice(0,25))
         .then(items => {
             this.setState({items})
         })
@@ -36,6 +46,15 @@ class IncomesList extends React.Component {
 /*eslint-enable*/
 
     render() {
+        if(!this.state.items.length > 0) {
+            return(
+                <div className="container-fluid">
+                    <div>
+                        <h2>Loading...</h2>
+                    </div>
+                </div>
+            );
+        }
         return(
         <div className="container-fluid">
             <div className="top-spacer">
@@ -43,11 +62,11 @@ class IncomesList extends React.Component {
                 <Link to={'/add-income'}><button type="button" className="btn btn-info">Dodaj nowy</button></Link>
                 <div className="table-responsive top-spacer">
                     <Table
-                        onDeleteItem={this.deleteIncome.bind(this)}
                         itemType="income"
                         items={this.state.items}
                         users={this.state.users}
                         categories={this.state.categories}
+                        onDeleteItem={this.deleteIncome.bind(this)}
                     />
                 </div>
             </div>
@@ -55,5 +74,10 @@ class IncomesList extends React.Component {
         );
     };
 }
+
+IncomesList.propTypes = {
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
+};
 
 export default IncomesList;

@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import { outcomesApi } from '../api/outcomesApi';
 
 import Table from '../components/Table';
 
@@ -7,13 +10,29 @@ class OutcomesList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: props.items,
+            items: [],
             users: props.users.asMap(),
             categories: props.categories.asMap()
         };
     }
 
+    componentDidMount() {
+        outcomesApi.getCollection()
+        /* TEMPORARY reducing collection size */
+        .then(items => items.slice(0,25))
+        .then( items => this.setState({items}) );
+    }
+
     render() {
+        if(!this.state.items.length > 0) {
+            return(
+                <div className="container-fluid">
+                    <div>
+                        <h2>Loading...</h2>
+                    </div>
+                </div>
+            );
+        }
         return(
         <div className="container-fluid">
             <div className="top-spacer">
@@ -32,5 +51,10 @@ class OutcomesList extends React.Component {
         );
     };
 }
+
+OutcomesList.propTypes = {
+    users: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
+};
 
 export default OutcomesList;

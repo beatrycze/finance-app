@@ -5,14 +5,13 @@ import {
     Switch
 } from 'react-router-dom';
 
-import {usersApi} from '../api/usersApi';
-import {outcomesApi} from '../api/outcomesApi';
-import {incomesApi} from '../api/incomesApi';
-import {outcomesCategoriesApi} from '../api/outcomesCategoriesApi';
-import {incomesCategoriesApi} from '../api/incomesCategoriesApi';
+import { usersApi } from '../api/usersApi';
+import { outcomesCategoriesApi } from '../api/outcomesCategoriesApi';
+import { incomesCategoriesApi } from '../api/incomesCategoriesApi';
 import { wrap } from '../utils/wrapper';
 
 import '../index.css';
+
 import Home from '../components/Home';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -28,8 +27,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            outcomes: [],
-            incomes: [],
             outcomesCategories: wrap([]),
             incomesCategories: wrap([]),
             users: wrap([])
@@ -55,21 +52,11 @@ class App extends Component {
             this.setState({outcomesCategories})
         });
 
-        outcomesApi.getCollection()
-        /* TEMPORARY reducing collection size */
-        .then(outcomes => outcomes.slice(0,25))
-        .then( outcomes => this.setState({outcomes}) );
-
         incomesCategoriesApi.get()
         .then(incomesCategories => wrap(incomesCategories))
         .then(incomesCategories => {
             this.setState({incomesCategories})
         });
-
-        incomesApi.getCollection()
-        /* TEMPORARY reducing collection size */
-        .then(incomes => incomes.slice(0,25))
-        .then( incomes => this.setState({incomes}) );
     }
 
     render() {
@@ -82,9 +69,9 @@ class App extends Component {
                     <Route exact path="/" component={Home} />
                     <Route path="/add-outcome" render={ (props) => (<AddOutcome users={this.state.users} categories={this.state.outcomesCategories} {...props}/>) } />
                     <Route path="/add-income" render={ (props) => (<AddIncome users={this.state.users} categories={this.state.incomesCategories} {...props}/>) } />
-                    <Route exact path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} categories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
-                    <Route exact path="/incomes" render={ (props) => (<IncomesList users={this.state.users} categories={this.state.incomesCategories} items={this.state.incomes} {...props}/>) } />
-                    <Route path="/edit-outcome/:itemId" render={ (props) => (<EditOutcome users={this.state.users} categories={this.state.outcomesCategories} items={this.state.outcomes} {...props}/>) } />
+                    <Route exact path="/outcomes" render={ (props) => (<OutcomesList users={this.state.users} categories={this.state.outcomesCategories} {...props}/>) } />
+                    <Route exact path="/incomes" render={ (props) => (<IncomesList users={this.state.users} categories={this.state.incomesCategories} {...props}/>) } />
+                    <Route path="/edit-outcome/:itemId" render={ (props) => (<EditOutcome users={this.state.users} categories={this.state.outcomesCategories} {...props}/>) } />
                     <Route path="/edit-income/:itemId" render={ (props) => (<EditIncome users={this.state.users} categories={this.state.incomesCategories} {...props}/>) } />
                     <Route component={NotFound} />
                 </Switch>
