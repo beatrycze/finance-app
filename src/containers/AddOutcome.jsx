@@ -153,10 +153,7 @@ class AddOutcome extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <div className="col-sm-1 col-sm-offset-2 col-lg-offset-1 top-spacer right-spacer">
-                                    <button type="submit" className="btn btn-primary">Zapisz i dodaj</button>
-                                </div>
-                                <div className="col-sm-1 col-sm-offset-1 col-md-offset-0 col-lg-offset-0 top-spacer right-spacer">
-                                    <button type="button" className="btn btn-info">Zapisz zmiany</button>
+                                    <button type="submit" className="btn btn-info">Zapisz i dodaj</button>
                                 </div>
                                 <div className="col-sm-1 col-sm-offset-1 col-md-offset-0 col-lg-offset-0 top-spacer">
                                     <Link to={'/outcomes'}><button type="button" className="btn btn-default">Wróć do listy wydatków</button></Link>

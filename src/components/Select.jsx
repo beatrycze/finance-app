@@ -5,14 +5,17 @@ class Select extends React.Component {
         super(props);
         this.state = {
             value: props.selectedValue,
-            handleChange: props.handleChange
+            handleChange: props.handleChange,
+            handleBlur: props.handleBlur,
+            disabled: props.disabled
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if(this.state.value !== nextProps.selectedValue) {
             this.setState({
-                value: nextProps.selectedValue
+                value: nextProps.selectedValue,
+                disabled: !this.state.disabled
             })
         }
     }
@@ -23,16 +26,18 @@ class Select extends React.Component {
         });
 
         if(this.props.placeholder) {
-            options.unshift(<option key="0">{this.props.placeholder}</option>);
+            options.unshift(<option key="0" disabled={this.state.disabled}>{this.props.placeholder}</option>);
         }
 
         return (
             <div>
                 <label htmlFor={this.props.label} className="col-sm-2 col-lg-1 col-form-label">{this.props.name}</label>
                 <div className="col-sm-6 col-md-4">
-                    <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.state.handleChange}>
-                        {options}
-                    </select>
+                    <div className={this.props.touched && (!this.props.valid) ? "has-error" : ""}>
+                        <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.state.handleChange} onBlur={this.state.handleBlur}>
+                            {options}
+                        </select>
+                    </div>
                 </div>
             </div>
         );
