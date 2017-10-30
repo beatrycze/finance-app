@@ -11,28 +11,31 @@ class AddOutcome extends React.Component {
         this.state = {
             users: props.users.asList(),
             categories: props.categories.asList(),
-            newItemCategoryId: '',
             newItemAmount: '',
-            newItemCreatedDate: '',
+            newItemCategoryId: '',
             newItemUserId: '',
+            newItemCreatedDate: '',
             newItemDescription: '',
-            newItemCategoryValue: '',
-            newItemUserValue: ''
+            newItemAmountValid: false,
+            newItemCategoryIdValid: false,
+            newItemUserIdValid: false,
+            newItemCreatedDateValid: false
         };
     }
 
     handleTextualFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
-            [field]: value
-            // TODO validation
+            [field]: value,
+            [field + 'Valid']: value.length > 0
         });
     }
 
     handleNumericFieldChange(field, event) {
         const value = parseInt(event.currentTarget.value, 10);
         this.setState({
-            [field]: value
+            [field]: value,
+            [field + 'Valid']: value > 0
         });
     }
 
@@ -40,12 +43,56 @@ class AddOutcome extends React.Component {
         const value = parseFloat(event.currentTarget.value);
         if (isNaN(value)) {
             this.setState({
-                [field]: ''
+                [field]: '',
+                [field + 'Valid']: false
             });
         } else {
             this.setState({
-                [field]: value
+                [field]: value,
+                [field + 'Valid']: value > 0
             });
+        }
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        const {
+            newItemAmount,
+            newItemCategoryId,
+            newItemUserId,
+            newItemCreatedDate,
+            newItemDescription,
+            newItemAmountValid,
+            newItemCategoryIdValid,
+            newItemUserIdValid,
+            newItemCreatedDateValid
+        } = this.state
+
+        let item = {
+            'amount': newItemAmount,
+            'categoryId': newItemCategoryId,
+            'createdBy': newItemUserId,
+            'createdAt': newItemCreatedDate,
+            'description': newItemDescription
+        }
+
+        if(newItemAmountValid && newItemCategoryIdValid && newItemUserIdValid && newItemCreatedDateValid) {
+            outcomesApi.create(item)
+            .then(response => response.json())
+            .then((item) => alert(`Dodano nowy wydatek o id: ${item.id}`))
+            .then(() => this.setState({
+                newItemAmount: '',
+                newItemCategoryId: '',
+                newItemUserId: '',
+                newItemCreatedDate: '',
+                newItemDescription: '',
+                newItemAmountValid: false,
+                newItemCategoryIdValid: false,
+                newItemUserIdValid: false,
+                newItemCreatedDateValid: false
+            }))
+            .catch(() => alert('Operacja nie powiodła się. Spróbuj ponownie.'))
         }
     }
 
@@ -57,7 +104,7 @@ class AddOutcome extends React.Component {
                         <h1>Dodaj wydatek</h1>
                     </div>
                     <div className="panel-body">
-                        <form className="top-spacer">
+                        <form className="top-spacer" onSubmit={this.handleSubmit.bind(this)}>
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
@@ -69,9 +116,9 @@ class AddOutcome extends React.Component {
                                     label={"category"}
                                     name={"Kategoria"}
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.newItemCategoryValue}
+                                    selectedValue={this.state.newItemCategoryId}
                                     options={this.state.categories}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemCategoryValue")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemCategoryId")}
                                 />
                             </div>
                             <div className="form-group row">
@@ -79,9 +126,10 @@ class AddOutcome extends React.Component {
                                     label={"createdBy"}
                                     name={"Utworzył(a)"}
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.newItemUserValue}
+                                    required={true}
+                                    selectedValue={this.state.newItemUserId}
                                     options={this.state.users}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemUserValue")}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemUserId")}
                                 />
                             </div>
                             <div className="form-group row">

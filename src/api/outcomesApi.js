@@ -8,6 +8,15 @@ const outcomesApi = {
         return fetch(`${BASE_URL}/outcomes/${itemId}`)
         .then(response => response.json());
     },
+    create(item){
+        return fetch(`${BASE_URL}/outcomes`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+    },
 }
 
 export {outcomesApi};
