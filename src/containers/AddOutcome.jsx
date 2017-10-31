@@ -115,8 +115,9 @@ class AddOutcome extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <Select 
-                                    label={"category"}
-                                    name={"Kategoria"}
+                                    label="category"
+                                    labelDisplay="Kategoria"
+                                    name="categoryId"
                                     placeholder="Wybierz"
                                     selectedValue={this.state.newItemCategoryId}
                                     options={this.state.categories}
@@ -124,9 +125,10 @@ class AddOutcome extends React.Component {
                                 />
                             </div>
                             <div className="form-group row">
-                                <Select 
-                                    label={"createdBy"}
-                                    name={"Utworzył(a)"}
+                                <Select
+                                    label="createdBy"
+                                    labelDisplay="Utworzył(a)"
+                                    name="userId"
                                     placeholder="Wybierz"
                                     required={true}
                                     selectedValue={this.state.newItemUserId}

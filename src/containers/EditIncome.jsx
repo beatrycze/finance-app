@@ -94,18 +94,20 @@ class EditIncome extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <Select 
-                                    label="category"
-                                    name="Kategoria"
+                                <Select
+                                    label="createdBy"
+                                    labelDisplay="Utworzył(a)"
+                                    name="categoryId"
                                     selectedValue={this.state.categoryId}
                                     options={this.state.categoriesList}
                                     handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
                                 />
                             </div>
                             <div className="form-group row">
-                                <Select 
+                                <Select
                                     label="createdBy"
-                                    name="Utworzył(a)"
+                                    labelDisplay="Utworzył(a)"
+                                    name="userId"
                                     selectedValue={this.state.userId}
                                     options={this.state.usersList}
                                     handleChange={this.handleNumericFieldChange.bind(this, "userId")}

@@ -36,58 +36,64 @@ class AddIncome extends React.Component {
         };
     }
 
-    handleCurrencyFieldChange(field, event) {
+    handleCurrencyFieldChange(event) {
         const value = parseFloat(event.currentTarget.value);
+        const name = event.currentTarget.name;
         if (isNaN(value)) {
             this.setState({
-                newItem: { ...this.state.newItem, [field]: '' },
-                valid: { ...this.state.valid, [field]: false }
+                newItem: { ...this.state.newItem, [name]: '' },
+                valid: { ...this.state.valid, [name]: false }
             });
         } else {
             this.setState({
-                newItem: { ...this.state.newItem, [field]: value },
-                valid: { ...this.state.valid, [field]: value > 0 }
+                newItem: { ...this.state.newItem, [name]: value },
+                valid: { ...this.state.valid, [name]: value > 0 }
             });
         }
     }
 
-    handleNumericFieldChange(field, event) {
+    handleNumericFieldChange(event) {
         const value = parseInt(event.currentTarget.value, 10);
+        const name = event.currentTarget.name;
         this.setState({
-            newItem: { ...this.state.newItem, [field]: value },
-            valid: { ...this.state.valid, [field]: value > 0 }
+            newItem: { ...this.state.newItem, [name]: value },
+            valid: { ...this.state.valid, [name]: value > 0 }
         });
     }
 
-    handleTextualFieldChange(field, event) {
+    handleTextualFieldChange(event) {
         const value = event.currentTarget.value;
+        const name = event.currentTarget.name;
         this.setState({
-            newItem: { ...this.state.newItem, [field]: value },
-            valid: { ...this.state.valid, [field]: value.length > 0 }
+            newItem: { ...this.state.newItem, [name]: value },
+            valid: { ...this.state.valid, [name]: value.length > 0 }
         });
     }
 
-    handleCurrencyFieldBlur(field, event) {
+    handleCurrencyFieldBlur(event) {
         const isValueValid = parseFloat(event.currentTarget.value) > 0;
+        const name = event.currentTarget.name;
         this.setState({
-            touched: { ...this.state.touched, [field]: true },
-            valid: { ...this.state.valid, [field]: isValueValid }
+            touched: { ...this.state.touched, [name]: true },
+            valid: { ...this.state.valid, [name]: isValueValid }
         });
     }
 
-    handleNumericFieldBlur(field, event) {
+    handleNumericFieldBlur(event) {
         const isValueValid = parseInt(event.currentTarget.value, 10) > 0;
+        const name = event.currentTarget.name;
         this.setState({
-            touched: { ...this.state.touched, [field]: true },
-            valid: { ...this.state.valid, [field]: isValueValid }
+            touched: { ...this.state.touched, [name]: true },
+            valid: { ...this.state.valid, [name]: isValueValid }
         });
     }
 
-    handleTextualFieldBlur(field, event) {
+    handleTextualFieldBlur(event) {
         const isValueValid = event.currentTarget.value.length > 0;
+        const name = event.currentTarget.name;
         this.setState({
-            touched: { ...this.state.touched, [field]: true },
-            valid: { ...this.state.valid, [field]: isValueValid }
+            touched: { ...this.state.touched, [name]: true },
+            valid: { ...this.state.valid, [name]: isValueValid }
         });
     }
 
@@ -144,40 +150,42 @@ class AddIncome extends React.Component {
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
                                     <div className={this.markError(touched.amount, valid.amount)}>
-                                        <input type="number" step="0.01" min="0" className="form-control" id="amount" placeholder="Wpisz kwotę"
+                                        <input className="form-control" type="number" name="amount" step="0.01" min="0" id="amount" placeholder="Wpisz kwotę"
                                             value={newItem.amount}
-                                            onChange={this.handleCurrencyFieldChange.bind(this, 'amount')}
-                                            onBlur={this.handleCurrencyFieldBlur.bind(this, 'amount')} />
+                                            onChange={this.handleCurrencyFieldChange.bind(this)}
+                                            onBlur={this.handleCurrencyFieldBlur.bind(this)} />
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <Select 
                                     label="category"
-                                    name="Kategoria"
+                                    labelDisplay="Kategoria"
+                                    name="categoryId"
                                     placeholder="Wybierz"
                                     disabled={disabledSelectOption}
                                     selectedValue={newItem.categoryId}
                                     options={categories}
                                     touched={touched.categoryId}
                                     valid={valid.categoryId}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
-                                    handleBlur={this.handleNumericFieldBlur.bind(this, "categoryId")}
+                                    handleChange={this.handleNumericFieldChange.bind(this)}
+                                    handleBlur={this.handleNumericFieldBlur.bind(this)}
                                     markError={this.markError}
                                 />
                             </div>
                             <div className="form-group row">
                                 <Select 
                                     label="createdBy"
-                                    name="Utworzył(a)"
+                                    labelDisplay="Utworzył(a)"
+                                    name="userId"
                                     placeholder="Wybierz"
                                     disabled={disabledSelectOption}
                                     selectedValue={newItem.userId}
                                     options={users}
                                     touched={touched.userId}
                                     valid={valid.userId}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "userId")}
-                                    handleBlur={this.handleNumericFieldBlur.bind(this, "userId")}
+                                    handleChange={this.handleNumericFieldChange.bind(this)}
+                                    handleBlur={this.handleNumericFieldBlur.bind(this)}
                                     markError={this.markError}
                                 />
                             </div>
@@ -185,10 +193,10 @@ class AddIncome extends React.Component {
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
                                     <div className={this.markError(touched.createdDate, valid.createdDate)}>
-                                        <input type="date" className="form-control" id="date" placeholder="Wpisz datę"
+                                        <input className="form-control" type="date" name="createdDate" id="date" placeholder="Wpisz datę"
                                             value={newItem.createdDate}
-                                            onChange={this.handleTextualFieldChange.bind(this, 'createdDate')}
-                                            onBlur={this.handleTextualFieldBlur.bind(this, 'createdDate')}
+                                            onChange={this.handleTextualFieldChange.bind(this)}
+                                            onBlur={this.handleTextualFieldBlur.bind(this)}
                                         />
                                     </div>
                                 </div>
@@ -203,9 +211,9 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
-                                    <input type="text" className="form-control" id="description" placeholder="Dodaj opis"
+                                    <input className="form-control" type="text" name="description" id="description" placeholder="Dodaj opis"
                                         value={newItem.description}
-                                        onChange={this.handleTextualFieldChange.bind(this, 'description')} />
+                                        onChange={this.handleTextualFieldChange.bind(this)} />
                                 </div>
                             </div>
                             <div className="form-group row">

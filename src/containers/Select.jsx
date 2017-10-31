@@ -31,10 +31,17 @@ class Select extends React.Component {
 
         return (
             <div>
-                <label htmlFor={this.props.label} className="col-sm-2 col-lg-1 col-form-label">{this.props.name}</label>
+                <label htmlFor={this.props.label} className="col-sm-2 col-lg-1 col-form-label">{this.props.labelDisplay}</label>
                 <div className="col-sm-6 col-md-4">
                     <div className={this.props.markError ? this.props.markError(this.props.touched, this.props.valid) : ''}>
-                        <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.props.handleChange} onBlur={this.props.handleBlur}>
+                        <select
+                            className="form-control"
+                            name={this.props.name}
+                            id={this.props.label}
+                            value={this.state.value}
+                            onChange={this.props.handleChange}
+                            onBlur={this.props.handleBlur}
+                        >
                             {options}
                         </select>
                     </div>
@@ -46,6 +53,7 @@ class Select extends React.Component {
 
 Select.propTypes = {
     label: PropTypes.string.isRequired,
+    labelDisplay: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
