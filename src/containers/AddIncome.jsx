@@ -32,7 +32,8 @@ class AddIncome extends React.Component {
                 userId: false,
                 createdDate: false,
             },
-            disabledSelectOption: false
+            disabledSelectOption: false,
+            rememberDate: false
         };
     }
 
@@ -67,6 +68,16 @@ class AddIncome extends React.Component {
         this.setState({
             newItem: { ...this.state.newItem, [name]: value },
             valid: { ...this.state.valid, [name]: value.length > 0 }
+        });
+    }
+
+    handleCheckboxChange(event) {
+        const value = event.currentTarget.checked;
+        console.log(value);
+        const name = event.currentTarget.name;
+        console.log(name);
+        this.setState({
+            [name]: value
         });
     }
 
@@ -113,11 +124,22 @@ class AddIncome extends React.Component {
             incomesApi.create(item)
             .then(response => response.json())
             .then((item) => alert(`Dodano nowy przychód o id: ${item.id}`))
-            .then(() => this.setState({
-                newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' }, //?
-                valid: { ...valid, [valid]: false },
-                disabledSelectOption: false
-            }))
+            // TODO verify
+            .then(() => {
+                if(this.state.rememberDate) {
+                    this.setState({
+                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, description: '' }, //?
+                        valid: { ...valid, [valid]: false },
+                        disabledSelectOption: false
+                    })
+                } else {
+                    this.setState({
+                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' }, //?
+                        valid: { ...valid, [valid]: false },
+                        disabledSelectOption: false
+                    })
+                }
+            })
             .catch(() => alert('Operacja nie powiodła się. Spróbuj ponownie.'))
         }
     }
@@ -134,6 +156,7 @@ class AddIncome extends React.Component {
     render() {
         const { users, categories, newItem, touched, valid, disabledSelectOption } = this.state;
 
+        // TODO - fix after 'save' action
         const isEnabled = Object.values(valid).reduce( (aggr, item) => {
 	        return aggr && item;
         }, true);
@@ -204,7 +227,11 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <div className="checkbox col-sm-3 col-sm-offset-2 col-lg-offset-1">
                                     <label>
-                                    <input type="checkbox" /> Zapamiętaj datę
+                                    <input type="checkbox" name="rememberDate"
+                                        disabled={valid.createdDate ? "" : "disabled"}
+                                        checked={this.state.rememberDate}
+                                        onChange={this.handleCheckboxChange.bind(this)}
+                                    /> Zapamiętaj datę
                                     </label>
                                 </div>
                             </div>
@@ -218,7 +245,7 @@ class AddIncome extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <div className="col-sm-1 col-sm-offset-2 col-lg-offset-1 top-spacer right-spacer">
-                                    <button type="submit" className="btn btn-info" disabled={isEnabled? '' : "disabled"}>Zapisz i dodaj</button>
+                                    <button type="submit" className="btn btn-info" disabled={isEnabled ? "" : "disabled"}>Zapisz i dodaj</button>
                                 </div>
                                 <div className="col-sm-1 col-sm-offset-1 col-md-offset-0 col-lg-offset-0 top-spacer">
                                     <Link to={'/incomes'}>
