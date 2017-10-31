@@ -5,7 +5,7 @@ import { outcomesApi } from '../api/outcomesApi';
 
 import '../styles/Forms.css';
 
-import Select from '../components/Select';
+import Select from './Select';
 
 class AddOutcome extends React.Component {
     constructor(props) {

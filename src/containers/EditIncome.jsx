@@ -5,7 +5,7 @@ import { incomesApi } from '../api/incomesApi';
 
 import '../styles/Forms.css';
 
-import Select from '../components/Select';
+import Select from './Select';
 
 class EditIncome extends React.Component {
     constructor(props) {

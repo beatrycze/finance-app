@@ -5,7 +5,7 @@ import { incomesApi } from '../api/incomesApi';
 
 import '../styles/Forms.css';
 
-import Select from '../components/Select';
+import Select from './Select';
 
 class AddIncome extends React.Component {
     constructor(props) {
@@ -156,12 +156,12 @@ class AddIncome extends React.Component {
                                     label="category"
                                     name="Kategoria"
                                     placeholder="Wybierz"
+                                    disabled={disabledSelectOption}
                                     selectedValue={newItem.categoryId}
                                     options={categories}
-                                    disabled={disabledSelectOption}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
                                     touched={touched.categoryId}
                                     valid={valid.categoryId}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
                                     handleBlur={this.handleNumericFieldBlur.bind(this, "categoryId")}
                                     markError={this.markError}
                                 />
@@ -171,11 +171,12 @@ class AddIncome extends React.Component {
                                     label="createdBy"
                                     name="Utworzył(a)"
                                     placeholder="Wybierz"
+                                    disabled={disabledSelectOption}
                                     selectedValue={newItem.userId}
                                     options={users}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "userId")}
                                     touched={touched.userId}
                                     valid={valid.userId}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "userId")}
                                     handleBlur={this.handleNumericFieldBlur.bind(this, "userId")}
                                     markError={this.markError}
                                 />
