@@ -13,22 +13,24 @@ class AddIncome extends React.Component {
         this.state = {
             users: props.users.asList(),
             categories: props.categories.asList(),
-            newItemAmount: '',
-            newItemCategoryId: 0,
-            newItemUserId: 0,
-            newItemCreatedDate: '',
-            newItemDescription: '',
+            newItem: {
+                amount: '',
+                categoryId: 0,
+                userId: 0,
+                createdDate: '',
+                description: '',
+            },
             touched: {
-                newItemAmount: false,
-                newItemCategoryId: false,
-                newItemUserId: false,
-                newItemCreatedDate: false,
+                amount: false,
+                categoryId: false,
+                userId: false,
+                createdDate: false,
             },
             valid: {
-                newItemAmount: false,
-                newItemCategoryId: false,
-                newItemUserId: false,
-                newItemCreatedDate: false,
+                amount: false,
+                categoryId: false,
+                userId: false,
+                createdDate: false,
             },
             disabledSelectOption: false
         };
@@ -38,12 +40,12 @@ class AddIncome extends React.Component {
         const value = parseFloat(event.currentTarget.value);
         if (isNaN(value)) {
             this.setState({
-                [field]: '',
+                newItem: { ...this.state.newItem, [field]: '' },
                 valid: { ...this.state.valid, [field]: false }
             });
         } else {
             this.setState({
-                [field]: value,
+                newItem: { ...this.state.newItem, [field]: value },
                 valid: { ...this.state.valid, [field]: value > 0 }
             });
         }
@@ -52,7 +54,7 @@ class AddIncome extends React.Component {
     handleNumericFieldChange(field, event) {
         const value = parseInt(event.currentTarget.value, 10);
         this.setState({
-            [field]: value,
+            newItem: { ...this.state.newItem, [field]: value },
             valid: { ...this.state.valid, [field]: value > 0 }
         });
     }
@@ -60,7 +62,7 @@ class AddIncome extends React.Component {
     handleTextualFieldChange(field, event) {
         const value = event.currentTarget.value;
         this.setState({
-            [field]: value,
+            newItem: { ...this.state.newItem, [field]: value },
             valid: { ...this.state.valid, [field]: value.length > 0 }
         });
     }
@@ -91,23 +93,14 @@ class AddIncome extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
-        const {
-            newItemAmount,
-            newItemCategoryId,
-            newItemUserId,
-            newItemCreatedDate,
-            newItemDescription
-        } = this.state
-
-        const { ...valid } = this.state.valid;
+        const { newItem, valid } = this.state;
 
         let item = {
-            'amount': newItemAmount,
-            'categoryId': newItemCategoryId,
-            'createdBy': newItemUserId,
-            'createdAt': newItemCreatedDate,
-            'description': newItemDescription
+            'amount': newItem.amount,
+            'categoryId': newItem.categoryId,
+            'createdBy': newItem.userId,
+            'createdAt': newItem.createdDate,
+            'description': newItem.description
         }
 
         if(valid) {
@@ -115,26 +108,29 @@ class AddIncome extends React.Component {
             .then(response => response.json())
             .then((item) => alert(`Dodano nowy przychód o id: ${item.id}`))
             .then(() => this.setState({
-                newItemAmount: '',
-                newItemCategoryId: '',
-                newItemUserId: '',
-                newItemCreatedDate: '',
-                newItemDescription: '',
-                valid: { ...this.state.valid, [valid]: false },
+                newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' }, //?
+                valid: { ...valid, [valid]: false },
                 disabledSelectOption: false
             }))
             .catch(() => alert('Operacja nie powiodła się. Spróbuj ponownie.'))
         }
     }
 
+    markError = (fieldTouched, fieldValid) => {
+        const shouldShowError = fieldTouched && !fieldValid;
+        if(shouldShowError) {
+            return "has-error";
+        } else {
+            return "";
+        }
+    }
+
     render() {
-        const isEnabled = Object.values(this.state.valid).reduce( (aggr, item) => {
+        const { users, categories, newItem, touched, valid, disabledSelectOption } = this.state;
+
+        const isEnabled = Object.values(valid).reduce( (aggr, item) => {
 	        return aggr && item;
         }, true);
-
-        // TODO function for marking fields errors
-        // const shouldShowError = this.state.touched.newItemAmount && (!this.state.valid.newItemAmount);
-        // ...
 
         return(
             <div className="container-fluid">
@@ -147,11 +143,11 @@ class AddIncome extends React.Component {
                             <div className="form-group row">
                                 <label htmlFor="amount" className="col-sm-2 col-lg-1 col-form-label">Kwota</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <div className={this.state.touched.newItemAmount && (!this.state.valid.newItemAmount) ? "has-error" : ""}>
+                                    <div className={this.markError(touched.amount, valid.amount)}>
                                         <input type="number" step="0.01" min="0" className="form-control" id="amount" placeholder="Wpisz kwotę"
-                                            value={this.state.newItemAmount}
-                                            onChange={this.handleCurrencyFieldChange.bind(this, 'newItemAmount')}
-                                            onBlur={this.handleCurrencyFieldBlur.bind(this, 'newItemAmount')} />
+                                            value={newItem.amount}
+                                            onChange={this.handleCurrencyFieldChange.bind(this, 'amount')}
+                                            onBlur={this.handleCurrencyFieldBlur.bind(this, 'amount')} />
                                     </div>
                                 </div>
                             </div>
@@ -160,13 +156,14 @@ class AddIncome extends React.Component {
                                     label="category"
                                     name="Kategoria"
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.newItemCategoryId}
-                                    options={this.state.categories}
-                                    disabled={this.state.disabledSelectOption}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemCategoryId")}
-                                    touched={this.state.touched.newItemCategoryId}
-                                    valid={this.state.valid.newItemCategoryId}
-                                    handleBlur={this.handleNumericFieldBlur.bind(this, "newItemCategoryId")}
+                                    selectedValue={newItem.categoryId}
+                                    options={categories}
+                                    disabled={disabledSelectOption}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "categoryId")}
+                                    touched={touched.categoryId}
+                                    valid={valid.categoryId}
+                                    handleBlur={this.handleNumericFieldBlur.bind(this, "categoryId")}
+                                    markError={this.markError}
                                 />
                             </div>
                             <div className="form-group row">
@@ -174,22 +171,23 @@ class AddIncome extends React.Component {
                                     label="createdBy"
                                     name="Utworzył(a)"
                                     placeholder="Wybierz"
-                                    selectedValue={this.state.newItemUserId}
-                                    options={this.state.users}
-                                    handleChange={this.handleNumericFieldChange.bind(this, "newItemUserId")}
-                                    touched={this.state.touched.newItemUserId}
-                                    valid={this.state.valid.newItemUserId}
-                                    handleBlur={this.handleNumericFieldBlur.bind(this, "newItemUserId")}
+                                    selectedValue={newItem.userId}
+                                    options={users}
+                                    handleChange={this.handleNumericFieldChange.bind(this, "userId")}
+                                    touched={touched.userId}
+                                    valid={valid.userId}
+                                    handleBlur={this.handleNumericFieldBlur.bind(this, "userId")}
+                                    markError={this.markError}
                                 />
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="date" className="col-sm-2 col-lg-1 col-form-label">Data</label>
                                 <div className="col-sm-3 col-md-2">
-                                    <div className={this.state.touched.newItemCreatedDate && (!this.state.valid.newItemCreatedDate) ? "has-error" : ""}>
+                                    <div className={this.markError(touched.createdDate, valid.createdDate)}>
                                         <input type="date" className="form-control" id="date" placeholder="Wpisz datę"
-                                            value={this.state.newItemCreatedDate}
-                                            onChange={this.handleTextualFieldChange.bind(this, 'newItemCreatedDate')}
-                                            onBlur={this.handleTextualFieldBlur.bind(this, 'newItemCreatedDate')}
+                                            value={newItem.createdDate}
+                                            onChange={this.handleTextualFieldChange.bind(this, 'createdDate')}
+                                            onBlur={this.handleTextualFieldBlur.bind(this, 'createdDate')}
                                         />
                                     </div>
                                 </div>
@@ -205,8 +203,8 @@ class AddIncome extends React.Component {
                                 <label htmlFor="description" className="col-sm-2 col-lg-1 col-form-label">Opis</label>
                                 <div className="col-sm-6 col-md-4">
                                     <input type="text" className="form-control" id="description" placeholder="Dodaj opis"
-                                        value={this.state.newItemDescription}
-                                        onChange={this.handleTextualFieldChange.bind(this, 'newItemDescription')} />
+                                        value={newItem.description}
+                                        onChange={this.handleTextualFieldChange.bind(this, 'description')} />
                                 </div>
                             </div>
                             <div className="form-group row">

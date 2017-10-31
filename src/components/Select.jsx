@@ -34,7 +34,7 @@ class Select extends React.Component {
             <div>
                 <label htmlFor={this.props.label} className="col-sm-2 col-lg-1 col-form-label">{this.props.name}</label>
                 <div className="col-sm-6 col-md-4">
-                    <div className={this.props.touched && (!this.props.valid) ? "has-error" : ""}>
+                    <div className={this.props.markError ? this.props.markError(this.props.touched, this.props.valid) : ''}>
                         <select className="form-control" id={this.props.label} value={this.state.value} onChange={this.state.handleChange} onBlur={this.state.handleBlur}>
                             {options}
                         </select>
@@ -56,6 +56,7 @@ Select.propTypes = {
     touched: PropTypes.bool,
     valid: PropTypes.bool,
     handleBlur: PropTypes.func,
+    markError: PropTypes.func
 };
 
 export default Select;
