@@ -12,12 +12,13 @@ const Table = (props) => {
                 {props.items
                     .map((item, index) => {
                         let user = props.users[item.createdBy];
-                        let itemData = Object.assign({}, item, {
+                        let itemData = {
+                            ...item,
                             type: props.itemType,
                             index: index + 1,
-                            user: user ? user.name : 'o.O',
-                            category: props.categories ? props.categories[item.categoryId].name : 'o.O'
-                        });
+                            user: user.name,
+                            category: props.categories[item.categoryId].name
+                        };
                         return <TableRow key={item.id} item={itemData} onDeleteItem={props.onDeleteItem}/>
                     })
                 }

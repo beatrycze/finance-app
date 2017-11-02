@@ -5,16 +5,16 @@ class Select extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: props.selectedValue,
+            selectedValue: props.selectedValue,
             options: props.options,
             disabled: props.disabled
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.state.value !== nextProps.selectedValue) {
+        if(this.state.selectedValue !== nextProps.selectedValue) {
             this.setState({
-                value: nextProps.selectedValue,
+                selectedValue: nextProps.selectedValue,
                 disabled: !this.state.disabled
             });
         }
@@ -38,7 +38,7 @@ class Select extends React.Component {
                             className="form-control"
                             name={this.props.name}
                             id={this.props.label}
-                            value={this.state.value}
+                            value={this.state.selectedValue}
                             onChange={this.props.handleChange}
                             onBlur={this.props.handleBlur}
                         >

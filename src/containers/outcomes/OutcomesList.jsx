@@ -19,6 +19,7 @@ class OutcomesList extends React.Component {
     componentDidMount() {
         outcomesApi.getCollection()
         /* TEMPORARY reducing collection size */
+        // TODO pagination
         .then(items => items.slice(0,25))
         .then( items => this.setState({items}) );
     }

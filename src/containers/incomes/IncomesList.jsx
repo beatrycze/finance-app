@@ -27,6 +27,7 @@ class IncomesList extends React.Component {
     componentDidMount() {
         incomesApi.getCollection()
         /* TEMPORARY reducing collection size */
+        // TODO pagination
         .then(items => items.slice(0,25))
         .then( items => this.setState({items}) );
     }
@@ -39,6 +40,7 @@ class IncomesList extends React.Component {
         .then(() => alert('Usunięto'))
         .then(() => incomesApi.getCollection())
         /* TEMPORARY reducing collection size */
+        // TODO pagination
         .then(items => items.slice(0,25))
         .then(items => {
             this.setState({items})
