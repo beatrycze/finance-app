@@ -40,17 +40,10 @@ class AddIncome extends React.Component {
     handleCurrencyFieldChange(event) {
         const value = parseFloat(event.currentTarget.value);
         const name = event.currentTarget.name;
-        if (isNaN(value)) {
-            this.setState({
-                newItem: { ...this.state.newItem, [name]: '' },
-                valid: { ...this.state.valid, [name]: false }
-            });
-        } else {
-            this.setState({
-                newItem: { ...this.state.newItem, [name]: value },
-                valid: { ...this.state.valid, [name]: value > 0 }
-            });
-        }
+        this.setState({
+            newItem: isNaN(value) ? { ...this.state.newItem, [name]: '' } : { ...this.state.newItem, [name]: value },
+            valid: { ...this.state.valid, [name]: value > 0 }
+        });
     }
 
     handleNumericFieldChange(event) {
@@ -73,9 +66,7 @@ class AddIncome extends React.Component {
 
     handleCheckboxChange(event) {
         const value = event.currentTarget.checked;
-        console.log(value);
         const name = event.currentTarget.name;
-        console.log(name);
         this.setState({
             [name]: value
         });
@@ -128,14 +119,16 @@ class AddIncome extends React.Component {
             .then(() => {
                 if(this.state.rememberDate) {
                     this.setState({
-                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, description: '' }, //?
-                        valid: { ...valid, [valid]: false },
+                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, description: '' },
+                        touched: { amount: false, categoryId: false, userId: false, createdDate: false },
+                        valid: { amount: false, categoryId: false, userId: false, createdDate: true },
                         disabledSelectOption: false
                     })
                 } else {
                     this.setState({
-                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' }, //?
-                        valid: { ...valid, [valid]: false },
+                        newItem: { amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' },
+                        touched: { amount: false, categoryId: false, userId: false, createdDate: false },
+                        valid: { amount: false, categoryId: false, userId: false, createdDate: false },
                         disabledSelectOption: false
                     })
                 }
@@ -146,17 +139,12 @@ class AddIncome extends React.Component {
 
     markError = (fieldTouched, fieldValid) => {
         const shouldShowError = fieldTouched && !fieldValid;
-        if(shouldShowError) {
-            return "has-error";
-        } else {
-            return "";
-        }
+        return shouldShowError ? "has-error" : "";
     }
 
     render() {
         const { users, categories, newItem, touched, valid, disabledSelectOption } = this.state;
 
-        // TODO - fix after 'save' action
         const isEnabled = Object.values(valid).reduce( (aggr, item) => {
 	        return aggr && item;
         }, true);
