@@ -6,24 +6,26 @@ import TableRow from './TableRow';
 
 const Table = (props) => {
     return(
-        <table className="table table-striped table-condensed">
-            <TableHead />
-            <tbody>
-                {props.items
-                    .map((item, index) => {
-                        let user = props.users[item.createdBy];
-                        let itemData = {
-                            ...item,
-                            type: props.itemType,
-                            index: index + 1,
-                            user: user.name,
-                            category: props.categories[item.categoryId].name
-                        };
-                        return <TableRow key={item.id} item={itemData} onDeleteItem={props.onDeleteItem}/>
-                    })
-                }
-            </tbody>
-        </table>
+        <div className="table-responsive top-spacer">
+            <table className="table table-striped table-condensed">
+                <TableHead />
+                <tbody>
+                    {props.items
+                        .map((item, index) => {
+                            let user = props.users[item.createdBy];
+                            let itemData = {
+                                ...item,
+                                type: props.itemType,
+                                index: index + 1,
+                                user: user.name,
+                                category: props.categories[item.categoryId].name
+                            };
+                            return <TableRow key={item.id} item={itemData} onDeleteItem={props.onDeleteItem}/>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
     );
 };
 

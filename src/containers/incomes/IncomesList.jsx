@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { incomesApi } from '../../api/incomesApi';
 
 import Table from '../../components/Table';
+import Loader from '../../components/Loader';
 
 // TODO: https://eslint.org/docs/user-guide/configuring
 /*eslint-disable*/
@@ -49,29 +50,22 @@ class IncomesList extends React.Component {
 /*eslint-enable*/
 
     render() {
-        if(!this.state.items.length > 0) {
-            return(
-                <div className="container-fluid">
-                    <div>
-                        <h2>Loading...</h2>
-                    </div>
-                </div>
-            );
-        }
+        const { items } = this.state;
         return(
         <div className="container-fluid">
             <div className="top-spacer">
                 <h1>Lista przychodów</h1>
                 <Link to={'/add-income'}><button type="button" className="btn btn-info">Dodaj nowy</button></Link>
-                <div className="table-responsive top-spacer">
-                    <Table
-                        itemType="income"
-                        items={this.state.items}
-                        users={this.state.users}
-                        categories={this.state.categories}
-                        onDeleteItem={this.deleteIncome.bind(this)}
-                    />
-                </div>
+                {
+                    !items.length > 0 ? <Loader /> :
+                        <Table
+                            itemType="income"
+                            items={this.state.items}
+                            users={this.state.users}
+                            categories={this.state.categories}
+                            onDeleteItem={this.deleteIncome.bind(this)}
+                        />
+                }
             </div>
         </div>
         );

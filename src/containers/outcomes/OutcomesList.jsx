@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { outcomesApi } from '../../api/outcomesApi';
 
 import Table from '../../components/Table';
+import Loader from '../../components/Loader';
 
 class OutcomesList extends React.Component {
     constructor(props) {
@@ -25,28 +26,21 @@ class OutcomesList extends React.Component {
     }
 
     render() {
-        if(!this.state.items.length > 0) {
-            return(
-                <div className="container-fluid">
-                    <div>
-                        <h2>Loading...</h2>
-                    </div>
-                </div>
-            );
-        }
+        const { items } = this.state;
         return(
         <div className="container-fluid">
             <div className="top-spacer">
-                <h1>Lista wydatków</h1>
+                <h1>Lista przychodów</h1>
                 <Link to={'/add-outcome'}><button type="button" className="btn btn-info">Dodaj nowy</button></Link>
-                <div className="table-responsive top-spacer">
-                    <Table
-                        itemType="outcome"
-                        items={this.state.items}
-                        users={this.state.users}
-                        categories={this.state.categories}
-                    />
-                </div>
+                {
+                    !items.length > 0 ? <Loader /> :
+                        <Table
+                            itemType="outcome"
+                            items={this.state.items}
+                            users={this.state.users}
+                            categories={this.state.categories}
+                        />
+                }
             </div>
         </div>
         );

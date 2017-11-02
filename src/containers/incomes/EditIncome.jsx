@@ -6,6 +6,7 @@ import { incomesApi } from '../../api/incomesApi';
 import '../../styles/Forms.css';
 
 import Select from '../../components/Select';
+import Loader from '../../components/Loader';
 
 class EditIncome extends React.Component {
     constructor(props) {
@@ -73,9 +74,7 @@ class EditIncome extends React.Component {
         if (!this.state.amount) {
             return(
                 <div className="container-fluid">
-                    <div>
-                        <h2>Loading...</h2>
-                    </div>
+                    <Loader />
                 </div>
             );
         }
