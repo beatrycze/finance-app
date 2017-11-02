@@ -16,12 +16,12 @@ import Home from '../components/Home';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NotFound from '../components/NotFound';
-import OutcomesList from './OutcomesList';
-import IncomesList from './IncomesList';
-import AddOutcome from './AddOutcome';
-import AddIncome from './AddIncome';
-import EditOutcome from './EditOutcome';
-import EditIncome from './EditIncome';
+import OutcomesList from './outcomes/OutcomesList';
+import IncomesList from './incomes/IncomesList';
+import AddOutcome from './outcomes/AddOutcome';
+import AddIncome from './incomes/AddIncome';
+import EditOutcome from './outcomes/EditOutcome';
+import EditIncome from './incomes/EditIncome';
 
 class App extends Component {
     constructor(props) {

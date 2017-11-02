@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { outcomesApi } from '../api/outcomesApi';
+import { outcomesApi } from '../../api/outcomesApi';
 
-import Table from '../components/Table';
+import Table from '../../components/Table';
 
 class OutcomesList extends React.Component {
     constructor(props) {

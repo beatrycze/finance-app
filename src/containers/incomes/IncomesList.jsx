@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { incomesApi } from '../api/incomesApi';
-import Table from '../components/Table';
+import { incomesApi } from '../../api/incomesApi';
+
+import Table from '../../components/Table';
 
 // TODO: https://eslint.org/docs/user-guide/configuring
 /*eslint-disable*/

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { incomesApi } from '../api/incomesApi';
+import { incomesApi } from '../../api/incomesApi';
 
-import '../styles/Forms.css';
+import '../../styles/Forms.css';
 
-import Select from './Select';
+import Select from '../../components/Select';
 
 const setNewItem = () => ({
         amount: '',

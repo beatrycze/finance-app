@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Header.css';
-import piggy_bank from '../piggy_bank.svg';
+import piggy_bank from '../assets/piggy_bank.svg';
 
 function Header() {
     return (
