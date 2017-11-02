@@ -7,31 +7,37 @@ import '../styles/Forms.css';
 
 import Select from './Select';
 
+const setNewItem = () => ({
+        amount: '',
+        categoryId: 0,
+        userId: 0,
+        createdDate: '',
+        description: ''
+});
+
+const setTouchedField = () => ({
+        amount: false,
+        categoryId: false,
+        userId: false,
+        createdDate: false
+});
+
+const setValidField = () => ({
+        amount: false,
+        categoryId: false,
+        userId: false,
+        createdDate: false
+});
+
 class AddIncome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             users: props.users.asList(),
             categories: props.categories.asList(),
-            newItem: {
-                amount: '',
-                categoryId: 0,
-                userId: 0,
-                createdDate: '',
-                description: '',
-            },
-            touched: {
-                amount: false,
-                categoryId: false,
-                userId: false,
-                createdDate: false,
-            },
-            valid: {
-                amount: false,
-                categoryId: false,
-                userId: false,
-                createdDate: false,
-            },
+            newItem: setNewItem(),
+            touched: setTouchedField(),
+            valid: setValidField(),
             disabledSelectOption: false,
             rememberDate: false
         };
@@ -104,31 +110,30 @@ class AddIncome extends React.Component {
         const { newItem, valid } = this.state;
 
         let item = {
-            'amount': newItem.amount,
-            'categoryId': newItem.categoryId,
-            'createdBy': newItem.userId,
-            'createdAt': newItem.createdDate,
-            'description': newItem.description
+            amount: newItem.amount,
+            categoryId: newItem.categoryId,
+            createdBy: newItem.userId,
+            createdAt: newItem.createdDate,
+            description: newItem.description
         }
 
         if(valid) {
             incomesApi.create(item)
             .then(response => response.json())
             .then((item) => alert(`Dodano nowy przychód o id: ${item.id}`))
-            // TODO verify
             .then(() => {
                 if(this.state.rememberDate) {
                     this.setState({
-                        newItem: { ...newItem, amount: '', categoryId: 0, userId: 0, description: '' },
-                        touched: { amount: false, categoryId: false, userId: false, createdDate: false },
-                        valid: { amount: false, categoryId: false, userId: false, createdDate: true },
+                        newItem: { ...setNewItem(), createdDate: item.createdAt },
+                        touched: setTouchedField(),
+                        valid: { ...setValidField(), createdDate: true },
                         disabledSelectOption: false
                     })
                 } else {
                     this.setState({
-                        newItem: { amount: '', categoryId: 0, userId: 0, createdDate: '', description: '' },
-                        touched: { amount: false, categoryId: false, userId: false, createdDate: false },
-                        valid: { amount: false, categoryId: false, userId: false, createdDate: false },
+                        newItem: setNewItem(),
+                        touched: setTouchedField(),
+                        valid: setValidField(),
                         disabledSelectOption: false
                     })
                 }

@@ -33,14 +33,8 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        usersApi.get()
-        /* TEMPORARY reducing collection size */
-        .then(users => users.slice(0,25))
-        .then(users => {
-            users.forEach(user => user.name = `${user.firstName} ${user.lastName}`);
-            return users;
-        })
+    componentWillMount() {
+        usersApi.getCollection()
         .then(users => wrap(users))
         .then(users => {
             this.setState({users})

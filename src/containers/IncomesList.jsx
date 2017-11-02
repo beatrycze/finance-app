@@ -33,7 +33,7 @@ class IncomesList extends React.Component {
 /*eslint-disable*/
     deleteIncome(id) {
         confirmPromise(`Czy na pewno chcesz usunąć przychód o id ${id}?`)
-//        .catch(() => {}) // TODO o.O
+//        .catch(() => {}) // TODO
         .then(() => incomesApi.delete(id))
         .then(() => alert('Usunięto'))
         .then(() => incomesApi.getCollection())

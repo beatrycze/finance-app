@@ -1,15 +1,15 @@
-const BASE_URL = 'http://localhost:3000/finance';
+import BASE_URL from '../config';
 
 const incomesApi = {
     getCollection(){
         return fetch(`${BASE_URL}/incomes`)
         .then(response => response.json());
     },
-    getItem(itemId){
+    getItem(itemId) {
         return fetch(`${BASE_URL}/incomes/${itemId}`)
         .then(response => response.json());
     },
-    create(item){
+    create(item) {
         return fetch(`${BASE_URL}/incomes`, {
             method: 'post',
             headers: {
@@ -25,4 +25,4 @@ const incomesApi = {
     }
 }
 
-export {incomesApi};
+export { incomesApi };

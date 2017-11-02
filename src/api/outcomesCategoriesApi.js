@@ -1,9 +1,10 @@
-const BASE_URL = 'http://localhost:3000/finance';
+import BASE_URL from '../config';
 
 const outcomesCategoriesApi = {
-    get(){
-        return fetch(`${BASE_URL}/categories/outcomes`).then(response => response.json());
+    get() {
+        return fetch(`${BASE_URL}/categories/outcomes`)
+        .then(response => response.json());
     }
 }
 
-export {outcomesCategoriesApi};
+export { outcomesCategoriesApi };
